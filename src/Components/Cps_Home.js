@@ -11,12 +11,11 @@ const Cps_Home = () => {
   const [city, setCity] = useState("");
   const [sex, setSex] = useState(null);
   const [formData, setFormData] = useState(null);
-  const [inputError, setInputError] = useState(false);
-  // const [inputErrorEmail, setInputErrorEmail] = useState(false);
-  // const [inputErrorPassWord, setInputErrorPassword] = useState(false); 
-  // const [inputErrorCity, setInputErrorCity] = useState(false); 
-  // const [inputErrorAddress, setInputErrorAddress] = useState(false); 
-  // const [inputErrorSelect, setInputErrorSelect] = useState(false); 
+  const [inputErrorEmail, setInputErrorEmail] = useState(false);
+  const [inputErrorPassWord, setInputErrorPassword] = useState(false); 
+  const [inputErrorCity, setInputErrorCity] = useState(false); 
+  const [inputErrorAddress, setInputErrorAddress] = useState(false); 
+  const [inputErrorSelect, setInputErrorSelect] = useState(false); 
   const options = [
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
@@ -114,16 +113,11 @@ const Cps_Home = () => {
     // } else {
     //   setInputErrorSelect(false);
     // }
-  const isEmailValid = handleInputValidation(email, setInputError, 'emailInput');
-  const isPasswordValid = handleInputValidation(password, setInputError, 'passwordInput');
-  const isAddressValid = handleInputValidation(address, setInputError, 'addressInput');
-  const isCityValid = handleInputValidation(city, setInputError, 'cityInput');
-  const isSexValid = handleInputValidation(sex, setInputError, 'sexInput');
-  // const isEmailValid = handleInputValidation(email, setInputErrorEmail, 'emailInput');
-  // const isPasswordValid = handleInputValidation(password, setInputErrorPassword, 'passwordInput');
-  // const isAddressValid = handleInputValidation(address, setInputErrorAddress, 'addressInput');
-  // const isCityValid = handleInputValidation(city, setInputErrorCity, 'cityInput');
-  // const isSexValid = handleInputValidation(sex, setInputErrorSelect, 'sexInput');
+  const isEmailValid = handleInputValidation(email, setInputErrorEmail, 'emailInput');
+  const isPasswordValid = handleInputValidation(password, setInputErrorPassword, 'passwordInput');
+  const isAddressValid = handleInputValidation(address, setInputErrorAddress, 'addressInput');
+  const isCityValid = handleInputValidation(city, setInputErrorCity, 'cityInput');
+  const isSexValid = handleInputValidation(sex, setInputErrorSelect, 'sexInput');
 
   if (isEmailValid && isPasswordValid && isAddressValid && isCityValid && isSexValid) {
     console.log(formData);
@@ -147,8 +141,7 @@ const Cps_Home = () => {
             }}
             validations={[required, emailValidate]}
             emailValidate={emailValidate(email)} 
-            // inputError={inputErrorEmail}
-            inputError={inputError}
+            inputError={inputErrorEmail}
           />
           <InpusCps
             focuslableInPut="passwordInput"
@@ -160,8 +153,7 @@ const Cps_Home = () => {
               handleInput(e, "password");
             }}
             placeholder="Pls enter your pass word"
-            // inputError={inputErrorPassWord}
-            inputError={inputError}
+            inputError={inputErrorPassWord}
           />
           <InpusCps
             focuslableInPut="addressInput"
@@ -173,7 +165,7 @@ const Cps_Home = () => {
               handleInput(e, "address");
             }}
             placeholder="Pls enter your inputAddress"
-            inputError={inputError}
+            inputError={inputErrorAddress}
           />
 
           <InpusCps
@@ -186,7 +178,7 @@ const Cps_Home = () => {
               handleInput(e, "city");
             }}
             placeholder="Pls enter your inputAddress"
-            inputError={inputError}
+            inputError={inputErrorCity}
           />
 
           <div className="col-md-4">
@@ -201,7 +193,7 @@ const Cps_Home = () => {
               }}
             />
 
-            {inputError && (
+            {inputErrorSelect && (
               <div className="errorDiv">Vui lòng chọn thành phố.</div>
             )}
           </div>
