@@ -11,6 +11,14 @@ const Cps_Home = () => {
   const [city, setCity] = useState("");
   const [sex, setSex] = useState(null);
   const [formData, setFormData] = useState(null);
+
+  const [inputError,setInputError] = useState({
+    email: false,
+    password: false,
+    city : false,
+    address: false,
+    select: false,
+  });
   const [inputErrorEmail, setInputErrorEmail] = useState(false);
   const [inputErrorPassWord, setInputErrorPassword] = useState(false); 
   const [inputErrorCity, setInputErrorCity] = useState(false); 
@@ -32,24 +40,7 @@ const Cps_Home = () => {
     return validator.isEmail(value);
   };
 
-  const handleInput = (e, name) => {
-    let value = e.target.value.trim();
-    if (name === "email") {
-      emailValidate(value);
-      setEmail(e.target.value);
-    } else if (name === "password") {
-      setPassword(e.target.value);
-    } else if (name === "address") {
-      setAddress(e.target.value);
-    } else if (name === "city") {
-      setCity(e.target.value);
-    }
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: e.target.value,
-    }));
-  };
+ 
 
   const handleInputChange = (selectedOption) => {
     setSex(selectedOption);
@@ -118,12 +109,41 @@ const Cps_Home = () => {
   const isAddressValid = handleInputValidation(address, setInputErrorAddress, 'addressInput');
   const isCityValid = handleInputValidation(city, setInputErrorCity, 'cityInput');
   const isSexValid = handleInputValidation(sex, setInputErrorSelect, 'sexInput');
-
+    console.log('email',email);
+    console.log('isEmailValid',isEmailValid);
   if (isEmailValid && isPasswordValid && isAddressValid && isCityValid && isSexValid) {
-    console.log(formData);
+    console.log('formData',formData);
   }
-    console.log(formData);
-    
+  };
+  // giá trị , 
+  const handleInput = (e, name) => {
+    let value = e.target.value.trim();
+    if (name === "email") {
+      if(name){
+        setInputErrorEmail(false)
+      }
+      setEmail(value);
+    } else if (name === "password") {
+      if(name){
+        setInputErrorPassword(false)
+      }
+      setPassword(e.target.value);
+    } else if (name === "address") {
+      if(name){
+        setInputErrorAddress(false)
+      }
+      setAddress(e.target.value);
+    } else if (name === "city") {
+      if(name){
+        setInputErrorCity(false)
+      }
+      setCity(e.target.value);
+    }
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]:value,
+    }));
   };
 
   return (
@@ -141,7 +161,7 @@ const Cps_Home = () => {
             }}
             validations={[required, emailValidate]}
             emailValidate={emailValidate(email)} 
-            inputError={inputErrorEmail}
+            inputError={inputErrorEmail} // thay cái này == inputError['email']
           />
           <InpusCps
             focuslableInPut="passwordInput"
