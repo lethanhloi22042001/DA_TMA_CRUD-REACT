@@ -11,11 +11,12 @@ const Cps_Home = () => {
   const [city, setCity] = useState("");
   const [sex, setSex] = useState(null);
   const [formData, setFormData] = useState(null);
-  const [inputErrorEmail, setInputErrorEmail] = useState(false);
-  const [inputErrorPassWord, setInputErrorPassword] = useState(false); 
-  const [inputErrorCity, setInputErrorCity] = useState(false); 
-  const [inputErrorAddress, setInputErrorAddress] = useState(false); 
-  const [inputErrorSelect, setInputErrorSelect] = useState(false); 
+  const [inputError, setInputError] = useState(false);
+  // const [inputErrorEmail, setInputErrorEmail] = useState(false);
+  // const [inputErrorPassWord, setInputErrorPassword] = useState(false); 
+  // const [inputErrorCity, setInputErrorCity] = useState(false); 
+  // const [inputErrorAddress, setInputErrorAddress] = useState(false); 
+  // const [inputErrorSelect, setInputErrorSelect] = useState(false); 
   const options = [
     { value: "Nam", label: "Nam" },
     { value: "Nữ", label: "Nữ" },
@@ -58,49 +59,75 @@ const Cps_Home = () => {
       sex: selectedOption.value,
     }));
   };
+  const handleInputValidation = (inputValue, setInputError, inputId) => {
+    if (!inputValue) {
+      setInputError(true);
+      const inputElement = document.getElementById(inputId);
+      inputElement && inputElement.focus();
+      return false;
+    } else {
+      setInputError(false);
+      return true;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email) {
-      setInputErrorEmail(true); // lí do đoạn set trực tiếp ở đây nên chạy xuống đây thì đoạn Input trên kia sẽ bị chạy hết
-      const emailInput = document.getElementById("emailInput"); // khi đoạn này tiêm vào JSX thì điều gì xảy ra
-      emailInput && emailInput.focus();
-      return;
-    } else {
-      setInputErrorEmail(false);
-    }
+    // if (!email) {
+    //   setInputErrorEmail(true); // lí do đoạn set trực tiếp ở đây nên chạy xuống đây thì đoạn Input trên kia sẽ bị chạy hết
+    //   const emailInput = document.getElementById("emailInput"); // khi đoạn này tiêm vào JSX thì điều gì xảy ra
+    //   emailInput && emailInput.focus();
+    //   return;
+    // } else {
+    //   setInputErrorEmail(false);
+    // }
 
-    if (!password) {
-      setInputErrorPassword(true);
-      const passwordInput = document.getElementById("passwordInput");
-      passwordInput && passwordInput.focus();
-      return;
-    } else {
-      setInputErrorPassword(false);
-    }
-    if (!address) {
-      setInputErrorAddress(true);
-      const addressInput = document.getElementById("addressInput");
-      addressInput && addressInput.focus();
-      return;
-    } else {
-      setInputErrorAddress(false);
-    }
-    if (!city) {
-      setInputErrorCity(true);
-      const cityInput = document.getElementById("cityInput");
-      cityInput && cityInput.focus();
-      return;
-    } else {
-      setInputErrorCity(false);
-    }
-    if (!sex) {
-      setInputErrorSelect(true);
-      const sexInput = document.getElementById("sexInput");
-      sexInput && sexInput.focus();
-      return;
-    } else {
-      setInputErrorSelect(false);
-    }
+    // if (!password) {
+    //   setInputErrorPassword(true);
+    //   const passwordInput = document.getElementById("passwordInput");
+    //   passwordInput && passwordInput.focus();
+    //   return;
+    // } else {
+    //   setInputErrorPassword(false);
+    // }
+    // if (!address) {
+    //   setInputErrorAddress(true);
+    //   const addressInput = document.getElementById("addressInput");
+    //   addressInput && addressInput.focus();
+    //   return;
+    // } else {
+    //   setInputErrorAddress(false);
+    // }
+    // if (!city) {
+    //   setInputErrorCity(true);
+    //   const cityInput = document.getElementById("cityInput");
+    //   cityInput && cityInput.focus();
+    //   return;
+    // } else {
+    //   setInputErrorCity(false);
+    // }
+    // if (!sex) {
+    //   setInputErrorSelect(true);
+    //   const sexInput = document.getElementById("sexInput");
+    //   sexInput && sexInput.focus();
+    //   return;
+    // } else {
+    //   setInputErrorSelect(false);
+    // }
+  const isEmailValid = handleInputValidation(email, setInputError, 'emailInput');
+  const isPasswordValid = handleInputValidation(password, setInputError, 'passwordInput');
+  const isAddressValid = handleInputValidation(address, setInputError, 'addressInput');
+  const isCityValid = handleInputValidation(city, setInputError, 'cityInput');
+  const isSexValid = handleInputValidation(sex, setInputError, 'sexInput');
+  // const isEmailValid = handleInputValidation(email, setInputErrorEmail, 'emailInput');
+  // const isPasswordValid = handleInputValidation(password, setInputErrorPassword, 'passwordInput');
+  // const isAddressValid = handleInputValidation(address, setInputErrorAddress, 'addressInput');
+  // const isCityValid = handleInputValidation(city, setInputErrorCity, 'cityInput');
+  // const isSexValid = handleInputValidation(sex, setInputErrorSelect, 'sexInput');
+
+  if (isEmailValid && isPasswordValid && isAddressValid && isCityValid && isSexValid) {
+    console.log(formData);
+  }
     console.log(formData);
     
   };
@@ -120,7 +147,8 @@ const Cps_Home = () => {
             }}
             validations={[required, emailValidate]}
             emailValidate={emailValidate(email)} 
-            inputError={inputErrorEmail}
+            // inputError={inputErrorEmail}
+            inputError={inputError}
           />
           <InpusCps
             focuslableInPut="passwordInput"
@@ -132,7 +160,8 @@ const Cps_Home = () => {
               handleInput(e, "password");
             }}
             placeholder="Pls enter your pass word"
-            inputError={inputErrorPassWord}
+            // inputError={inputErrorPassWord}
+            inputError={inputError}
           />
           <InpusCps
             focuslableInPut="addressInput"
@@ -144,7 +173,7 @@ const Cps_Home = () => {
               handleInput(e, "address");
             }}
             placeholder="Pls enter your inputAddress"
-            inputError={inputErrorAddress}
+            inputError={inputError}
           />
 
           <InpusCps
@@ -157,7 +186,7 @@ const Cps_Home = () => {
               handleInput(e, "city");
             }}
             placeholder="Pls enter your inputAddress"
-            inputError={inputErrorCity}
+            inputError={inputError}
           />
 
           <div className="col-md-4">
@@ -172,7 +201,7 @@ const Cps_Home = () => {
               }}
             />
 
-            {inputErrorSelect && (
+            {inputError && (
               <div className="errorDiv">Vui lòng chọn thành phố.</div>
             )}
           </div>
