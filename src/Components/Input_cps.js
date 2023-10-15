@@ -1,43 +1,41 @@
+ import React, { useState } from "react";
 
-import React, { useState } from "react";
-// do vòng for thay đổi liên tục nên đoạn này phải dùng state
-//cách 1 :  nếu không nhập thì cái ô đó thành false + name của cái đã bị chuyển thành false
-const InpusCps = ({ focuslableInPut, nameLable, type, value, onChange, placeholder, inputError, ...ref }) => {
-  const [error, setError] = useState(false)
-  function onChangeValue(e) {
-    console.log('ips',e.target.value);
-    if(e.target.value === '') {
-      setError(true);
-    } else {
-      setError(false)
-    }
-  }
+const InpusCps = ({ label, type, placeholder, errors, register,value }) => {
+  const isEverythingGood =  !errors[label] && value !== '';
   return (
     <div className={`col-md-6 input-control`}>
-      <label htmlFor={focuslableInPut} className="form-label">
-        {nameLable}
+      <label htmlFor={label} className="form-label">
+        {label}
       </label>
       <input
         type={type}
-        className={`form-control ${inputError === false ? '' : 'aloha'}`}
-        id={focuslableInPut}
-        value={value || ''}
-        onChange={(e) => {
-          onChange(e);
-          onChangeValue(e)
-        }}
+        className={`form-control `}
+        id={label}
         placeholder={placeholder}
+        {...register(label, {
+          required: `Vui lòng nhập vào ${label}`,
+          // validate: { // validate cho phép customize  <=> của errors
+          //   lookGood: (value) => {
+          //     return value !== "test" ? "Everything looks good" : "";
+          //   },
+          // },     
+          maxLength: {
+            value: label === "password" || label === "email" ? 25 : null,
+            message:
+              label === "password" || label === "email"
+                ? `${label} không được dài quá 25 ký tự`
+                : null,
+          },
+        })}
       />
-    {true && error && (
-      <div className="errorDiv">Vui lòng nhập vào  {nameLable}.</div>
-      )}
+      <span>
+        {errors[label] && errors[label].message}
+        {errors[label] && errors[label].message && isEverythingGood && "Everything looks good"}
+      </span>
+       
     </div>
   );
 };
 
 export default InpusCps;
 
-
- {/* đầu tiên mình phải fix đỏ hết */}
-      {/* theo mình nghĩ là do set cái này nên nó chạy hết tất cả div , nên xí set lại */}
-      {/* {inputError && !inputFocused && <div className="errorDiv">Vui lòng nhập {nameLable}.</div>} */}
