@@ -1,0 +1,153 @@
+ // <div className={`col-md-6 input-control`}>
+    //   <label htmlFor={label} className="form-label">
+    //     {label}
+    //   </label>
+    //   <input
+    //     style={errors[label] && errors[label].message && inputStyles}
+    //     type={type}
+    //     className={`form-control `}
+    //     id={label}
+    //     placeholder={placeholder}
+    //     {...register(label, {
+    //       required: `Vui lòng nhập vào ${label}`,
+    //       maxLength: {
+    //         value: label === "password" || label === "email" ? 25 : null,
+    //         message:
+    //           label === "password" || label === "email"
+    //             ? `${label} không được dài quá 25 ký tự`
+    //             : null,
+    //       },
+    //     })}
+    //   />
+    //   <span>
+    //     {errors[label] && errors[label].message}
+    //     {errors[label] &&
+    //       errors[label].message &&
+    //       isEverythingGood &&
+    //       "Everything looks good"}
+    //   </span>
+    // </div>
+
+
+    .form_login{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: rgb(251,193,34);
+    background-image: linear-gradient( to right top, #FEAF00 ,#F8D442,#F8D442 );
+   
+    .form_contain{
+        padding: 40px 60px;
+        background-color:rgb(255,255,255) ;
+        border-radius: 20px;
+        // max-width: 475px; // khác gì với with:400px
+        width: 475px;
+        height: 550px;
+
+        display: flex;
+        flex-direction: column;
+        .logo {
+            margin-bottom: 50px;
+            h1 {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 43px;
+            }
+            .logo_text{
+                text-align: center;
+                .logo_text1{
+                    font-size: 22px;
+                    font-weight: 600;
+                }
+                .logo_text2{
+                    font-size: 14px;
+                    font-weight: 300;
+                    color: #6C6C6C;
+                }
+            }
+        }
+        
+        .inps{
+            label {
+                margin-bottom: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                color: #6C6C6C;
+            }
+            button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 44px;  
+                border-radius: 4px ;
+                border :  solid ;
+                text-align: center;
+                background-color: #F8D442;
+                border: none;
+                &:focus {
+                    outline: none; 
+                  }
+            }
+            .inps_Chung {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+
+                position: relative; // để khi span hiện lên là sẽ trội lên , k bị đè hay đẩy các thuộc tính khác
+                input::placeholder {
+                    font-weight: regular ;
+                    font-size: 12px;
+                    color: #CDCDCD; /* Thay đổi màu cho placeholder */
+                }
+                input {
+                    height: 44px;  
+                    // color: #E5E5E5;
+                    border-radius: 4px ;
+                    border :  solid ;
+                 
+                }
+                //  span {
+                //     position: absolute;
+
+                //     bottom: -4px;
+                //     left: 11px;
+                //   }
+                
+                &.inps_email {
+                    label {
+                        
+                    }
+                
+                    input {
+                     
+                    }
+                }
+                &.inps_password {
+                
+                    label {
+                        
+                    }
+                
+                    input {
+                     
+                    }
+                }
+              
+                 
+            }
+
+        }
+        .footer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+        
+    }
+}

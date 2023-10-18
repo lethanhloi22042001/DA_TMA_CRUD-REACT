@@ -11,7 +11,7 @@ const Home = () => {
       {/* <Cps_Home  />    */}
       <Outlet />
 
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 };
