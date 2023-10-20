@@ -4,7 +4,8 @@ import { faArrowRight, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal_CreateInPut from "../../Components/Modal_CreateInPut";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { Button } from "reactstrap";
+
 import {
   getAllUserRedux,
   deleteUserRedux,
@@ -14,49 +15,10 @@ import {
 } from "../../Redux/actions";
 
 const Dash_board = () => {
-  const [users, setUsers] = useState({
-    address: "",
-    email: "",
-    firstName: "",
-    gender: "",
-    id: Number,
-    lastName: "",
-    phonenumber: "",
-  });
   const dispatch = useDispatch();
-  const [modal, setModal] = useState(false);
-  const arrUsersss = useSelector((state) => state.user.arrUser);
-  const oneUserRedux = useSelector((state) => state.user.user);
-  const [userId,setUserId] = useState({});
-  const [aciton, setAciton] = useState("CREATE");
-  const toggle = () => {
-    if (modal === true) {
-      reset();
-      {
-        setAciton("CREATE");
-      }
-    }
-    setModal(!modal);
-  };
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-    setValue,
-    getValues,
-    reset,
-    watch,
-  } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-      address: "",
-      firstName: "",
-      lastName: "",
-    },
-    resetOptions: {},
-  });
-
+  const arrUsersss = useSelector((state) => state.user.arrUser); // Mảng user
+  const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal Thằng nhận data 1 Item
+  const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
   // Muont + Update if [dispatch] be changed
   useEffect(() => {
     dispatch(getAllUserRedux());
@@ -66,40 +28,25 @@ const Dash_board = () => {
     dispatch(deleteUserRedux(item.id));
     alert("Xoá Thành Công");
   };
-  const handleEdit = (item) =>  {
-    console.log('item of list',item);
-    console.log('item of Redux',item);
-    setUserId(item.id);
-    if (item) {
-      setValue("email", item.email);
-      setValue("password", item.password);
-      setValue("firstName", item.firstName);
-      setValue("lastName", item.lastName);
-      setValue("address", item.address);
-    }
-    setAciton("EDIT");
-    toggle();
+  const handleEdit = (item) => {
+    console.log(item, "item");
+    setItemDataModal(item);
   };
-  const onSubmit = () => {
-    console.log('action of onSubmmit',aciton);
-    if(aciton === "CREATE"){
-      console.log('da vao CREATE');
-      const valueFormSubmit = getValues();
-      const copyValueFormSubmit = { ...valueFormSubmit, action: "CREATE" };
-      dispatch(createUserRedux(copyValueFormSubmit));
-      console.log("valueFormSubmit", copyValueFormSubmit);
+  const onSubmit = (data, value, reset) => {
+    if (!value) { //value chính là modalValue
+                  // Nếu có chọn 1 item thì là value => EDIT
+      dispatch(createUserRedux(data));
+      console.log("valueFormSubmit", data);
       alert("User created successfully!");
-      reset();
-      toggle();
-      }
-    if(aciton==="EDIT"){
-      const a = getValues();
-      const b ={...a,id : userId}
-    dispatch(updateUserRedux(b));
-      toggle();
+      setOpenModal(false);
+      reset()
+    } else {
+      dispatch(updateUserRedux({ data, id: value.id }));
+      console.log("valueFormSubmit", data);
+      alert("User edit successfully!");
+      setOpenModal(false);
+      reset()
     }
-
-
   };
   return (
     <div className="admin_form">
@@ -164,14 +111,14 @@ const Dash_board = () => {
             </span>
           </div>
           <div>
+            <Button color="danger" onClick={() => setOpenModal(true)}> 
+              {"Add New User 13"}
+            </Button>
             <Modal_CreateInPut
-              register={register}
-              errors={errors}
-              modal={modal}
-              toggle={toggle}
+              modalValue={itemDataModal}
               onSubmit={onSubmit}
-              aciton={aciton}
-              setAciton={setAciton}
+              isOpenModal={openModal}
+              setIsOpenModal={setOpenModal}
             />
           </div>
         </div>
@@ -250,7 +197,7 @@ const Dash_board = () => {
                           className="status delivered asd"
                           onClick={() => {
                             handleEdit(item);
-                            setAciton("EDIT");
+                            setOpenModal(true);
                           }}
                         >
                           Edit User

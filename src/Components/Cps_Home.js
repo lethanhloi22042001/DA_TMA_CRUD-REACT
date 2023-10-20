@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, createContext } from "react";
 import { useSelector } from "react-redux";
 import InpusCps from "./Input_cps";
 import { useForm, SubmitHandler } from "react-hook-form";
-import "./dsa.css";
+// import "../Components/Scss/dsa.css";
 import userService from "../Services/userService";
 
 const Cps_Home = () => {

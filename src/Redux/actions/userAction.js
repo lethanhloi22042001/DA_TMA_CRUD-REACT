@@ -1,13 +1,13 @@
 import actionTypes from "./actionTypes";
 import userService from "../../Services/userService";
 
-//Get 1 User
+//========= Get 1 User===============
 export const getOneUser = (data) => ({
   type: actionTypes.GET_ONE_USER_SUCCESS,
   data: data,
 });
 
-// Get All User
+//========= Get All User===============
 export const getAllUserSucess = (data) => ({
   data: data,
   type: actionTypes.GET_ALLUSER_SUCCESS,
@@ -31,7 +31,7 @@ export const getAllUserFail = () => ({
   type: actionTypes.GET_ALLUSER_FAIL,
 });
 
-// Create User
+//========= CREATE USER===============
 
 export const createUserRedux = (data) => {
   return async (dispatch, getState) => {
@@ -59,7 +59,7 @@ export const createUserFail = () => ({
   type: actionTypes.CREATE_USER_FAIL,
 });
 
-// Delete User
+// ========= DELETE===============
 export const deleteUserRedux = (userId) => {
   return async (dispatch, getState) => {
     try {
@@ -84,7 +84,7 @@ export const deleteUserFail = () => ({
   type: actionTypes.DELETE_USER_FAIL,
 });
 
-// Update User  
+// ========= UpDATE===============
 export const updateUserRedux = (data) => {
   return async (dispatch, getState) => {
     try {

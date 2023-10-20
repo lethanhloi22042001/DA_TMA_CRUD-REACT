@@ -3,43 +3,66 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InpusCps from "../Components/Input_cps";
 import "../Components/Scss/Modal_CreateUser.scss";
-import { useForm, SubmitHandler, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const Modal_CreateInPut = ({
-  register,
-  errors,
-  modal,
-  toggle,
-  onSubmit, 
-  aciton,
-  setAciton
-  
+  onSubmit,
+  modalValue,
+  isOpenModal,
+  setIsOpenModal,
 }) => {
-  const handleCancle = ()=>{
-    toggle();
-  }
-  
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+    setValue,
+    reset,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      address: "",
+      firstName: "",
+      lastName: "",
+    },
+    resetOptions: {},
+  });
+  const handleCancle = () => {
+    setIsOpenModal(false);
+    reset();
+  };
+
+  //  ????
+  useEffect(() => {
+    if (modalValue) {
+      setValue("email", modalValue.email);
+      setValue("password", modalValue.password);
+      setValue("address", modalValue.address);
+      setValue("firstName", modalValue.firstName);
+      setValue("lastName", modalValue.lastName);
+    }
+  }, [modalValue]); // bắn trên xuống -> be Changed , thì nạp lại
+
+  const handleOnSubmit = handleSubmit((data) => {
+    onSubmit(data, modalValue, reset); //modalValue nhận lại data 1 item đã được set
+    //modalValue => Lấy từ Cha xuống
+  });
+
   return (
     <>
-    {console.log()}
-      <Button color="danger" onClick={toggle}>
-        {"Add New User"}
-      </Button>
-      <Modal isOpen={modal} toggle={toggle} className={"this. className"}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+      <Modal isOpen={isOpenModal} className={"this. className"}>
+        <ModalHeader>Modal title</ModalHeader>
         <ModalBody>
           <form>
             <div class="container">
               <div class="form-group row">
                 <div class="col-md-6 mb-4">
                   <InpusCps
-                    
                     register={register}
-
                     label="email"
                     type="email"
                     placeholder="Pls enter the here :V "
-                    defaultValue={''}
+                    defaultValue={""}
                     //   value={"watchedValues.email"}
                     errors={errors}
                   />
@@ -52,7 +75,7 @@ const Modal_CreateInPut = ({
                     placeholder="Pls enter the here :V "
                     //   value={"watchedValues.password"}
                     errors={errors}
-                    defaultValue={''}
+                    defaultValue={""}
                   />
                 </div>
               </div>
@@ -66,7 +89,7 @@ const Modal_CreateInPut = ({
                     placeholder="Pls enter the here :V "
                     value={"watchedValues.firstname"}
                     errors={errors}
-                    defaultValue={''}
+                    defaultValue={""}
                   />
                 </div>
                 <div class="col-md-6">
@@ -77,7 +100,7 @@ const Modal_CreateInPut = ({
                     placeholder="Pls enter the here :V "
                     //   value={"watchedValues.lastname"}
                     errors={errors}
-                    defaultValue={''}
+                    defaultValue={""}
                   />
                 </div>
               </div>
@@ -90,7 +113,7 @@ const Modal_CreateInPut = ({
                     placeholder="Pls enter the here :V "
                     //   value={"watchedValues.address"}
                     errors={errors}
-                    defaultValue={''}
+                    defaultValue={""}
                   />
                 </div>
               </div>
@@ -98,11 +121,12 @@ const Modal_CreateInPut = ({
           </form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={onSubmit} >
-            {aciton === 'CREATE' ? ' Thêm' : "Cập Nhật"}
+          <Button color="primary" onClick={handleOnSubmit}>
+            {modalValue ? "Edit" : "Create"}{" "}
+            {/* is Data 1 item ==> Edit : Create */}
+            {/* xử lí xong UI/ EDIT CREATE */}
           </Button>
           <Button color="secondary" onClick={handleCancle}>
-        
             Cancel
           </Button>
         </ModalFooter>
