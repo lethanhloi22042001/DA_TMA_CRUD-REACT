@@ -1,4 +1,3 @@
-import "./App.css";
 import Home from "./Home/Home";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Chicken from "./Todo/Chicken";

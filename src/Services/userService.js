@@ -1,4 +1,4 @@
-import instance from "../axios";
+import instance from "../axios/axios";
 
 const getAllUser = (inputId) => {
   return instance.get(`/api/get-all-users?id=${inputId}`,inputId);

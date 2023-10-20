@@ -1,5 +1,9 @@
 const actionTypes = Object.freeze({
-    //user
+    
+    //1 User
+    GET_ONE_USER_SUCCESS :'GET_ONE_USER_SUCCESS',
+    GET_ONE_USER_FAIL :'GET_ONE_USER_FAIL',
+    //Users
     CREATE_USER_SUCCESS: 'CREATE_USER_SUCCESS',
     CREATE_USER_FAIL: 'CREATE_USER_FAIL',
 

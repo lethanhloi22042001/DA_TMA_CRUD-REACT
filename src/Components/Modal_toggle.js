@@ -2,16 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InpusCps from "../Components/Input_cps";
-import './Modal_toggle.scss'
+import '../Components/Scss/Modal_toggle.scss'
 import { useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 const Modal_toggle = ({ modal, toggle }) => {
-  // const [modal, setModal] = useState(false);
-  // const toggle = () => {
-  //   setModal(!modal);
-  // };
-
   const [user, setUser] = useState(null);
   const [dataForm, setDataFrom] = useState({});
   const values = useSelector((state) => state.user.user);

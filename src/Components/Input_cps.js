@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-const InpusCps = ({ label, type, placeholder, errors, register, value }) => {
+const InpusCps = ({ label, type, placeholder, errors, register, value,defaultValue }) => {
   const isEverythingGood = !errors[label] && value !== ""; 
-  console.log(isEverythingGood,'isEverythingGood');
   const inputStyles = {
     marginBottom: "20px",
     borderWidth: "1px 1px 1px 14px",
@@ -24,6 +23,7 @@ const InpusCps = ({ label, type, placeholder, errors, register, value }) => {
         className={`form-control `}
         id={label}
         placeholder={placeholder}
+        defaultValue = {defaultValue}
         {...register(label, {
           required: `Vui lòng nhập vào ${label}`,
           maxLength: {

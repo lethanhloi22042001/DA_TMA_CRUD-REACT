@@ -18,7 +18,6 @@ const DangNhap = ()=>{
         setValue,
         getValues,
         reset,
-        // onBlur,
         watch,
       } = useForm({
         defaultValues: {
@@ -43,9 +42,6 @@ const DangNhap = ()=>{
           console.error("Error creating user:", error);
         }
       };
-      const watchedValues = watch();  
-     
-
     return(
         <div className='form_login'>
             <form id="form"  className='form_contain' onSubmit={handleSubmit(onSubmit)}>

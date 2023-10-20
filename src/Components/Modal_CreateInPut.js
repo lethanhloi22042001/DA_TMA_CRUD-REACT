@@ -1,57 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import InpusCps from "../../Components/Input_cps";
-import userService from "../../Services/userService";
-import './Modal_CreateUser.scss'
-import { useDispatch, useSelector } from "react-redux";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { createUserRedux } from "../../Redux/actions";
+import InpusCps from "../Components/Input_cps";
+import "../Components/Scss/Modal_CreateUser.scss";
+import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 
-const Modal_CreateUser = ({ modal, toggle }) => {
-    const [dataForm, setDataFrom] = useState({});;
-    const dispatch = useDispatch();
-
-    const {
-      handleSubmit,
-      formState: { errors },
-      register,
-      setValue,
-      getValues,
-      reset,
-      // onBlur,
-      watch,
-    } = useForm({
-      defaultValues: {
-        email: "",
-        password: "",
-        address: "",
-        firstName: "",
-        lastName: "",
-      },
-      resetOptions: {},
-    });
+const Modal_CreateInPut = ({
+  register,
+  errors,
+  modal,
+  toggle,
+  onSubmit, 
+  aciton,
+  setAciton
   
-    const onSubmit = async () => {
-      try {
-        const valueFormSubmit = getValues();
-        dispatch(createUserRedux(valueFormSubmit));
-        alert("User created successfully!");
-        reset();
-        toggle();
-      } catch (error) {
-        console.error("Error creating user:", error);
-      }
-    };
-    const watchedValues = watch();  
+}) => {
+  const handleCancle = ()=>{
+    toggle();
+  }
   
-
   return (
     <>
+    {console.log()}
       <Button color="danger" onClick={toggle}>
         {"Add New User"}
       </Button>
-      <Modal isOpen={modal} toggle={toggle} className={"this.props.className"}>
+      <Modal isOpen={modal} toggle={toggle} className={"this. className"}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
           <form>
@@ -59,11 +33,14 @@ const Modal_CreateUser = ({ modal, toggle }) => {
               <div class="form-group row">
                 <div class="col-md-6 mb-4">
                   <InpusCps
+                    
                     register={register}
+
                     label="email"
                     type="email"
                     placeholder="Pls enter the here :V "
-                    value={"watchedValues.email"}
+                    defaultValue={''}
+                    //   value={"watchedValues.email"}
                     errors={errors}
                   />
                 </div>
@@ -73,8 +50,9 @@ const Modal_CreateUser = ({ modal, toggle }) => {
                     label="password"
                     type="password"
                     placeholder="Pls enter the here :V "
-                    value={"watchedValues.password"}
+                    //   value={"watchedValues.password"}
                     errors={errors}
+                    defaultValue={''}
                   />
                 </div>
               </div>
@@ -88,6 +66,7 @@ const Modal_CreateUser = ({ modal, toggle }) => {
                     placeholder="Pls enter the here :V "
                     value={"watchedValues.firstname"}
                     errors={errors}
+                    defaultValue={''}
                   />
                 </div>
                 <div class="col-md-6">
@@ -96,8 +75,9 @@ const Modal_CreateUser = ({ modal, toggle }) => {
                     label="lastName"
                     type="lastname"
                     placeholder="Pls enter the here :V "
-                    value={"watchedValues.lastname"}
+                    //   value={"watchedValues.lastname"}
                     errors={errors}
+                    defaultValue={''}
                   />
                 </div>
               </div>
@@ -108,8 +88,9 @@ const Modal_CreateUser = ({ modal, toggle }) => {
                     label="address"
                     type="address"
                     placeholder="Pls enter the here :V "
-                    value={"watchedValues.address"}
+                    //   value={"watchedValues.address"}
                     errors={errors}
+                    defaultValue={''}
                   />
                 </div>
               </div>
@@ -117,10 +98,11 @@ const Modal_CreateUser = ({ modal, toggle }) => {
           </form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSubmit(onSubmit)}>
-            Thêm
+          <Button color="primary" onClick={onSubmit} >
+            {aciton === 'CREATE' ? ' Thêm' : "Cập Nhật"}
           </Button>
-          <Button color="secondary" onClick={toggle}>
+          <Button color="secondary" onClick={handleCancle}>
+        
             Cancel
           </Button>
         </ModalFooter>
@@ -129,4 +111,4 @@ const Modal_CreateUser = ({ modal, toggle }) => {
   );
 };
 
-export default Modal_CreateUser;
+export default Modal_CreateInPut;

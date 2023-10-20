@@ -3,37 +3,106 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Modal_CreateUser from "./Modal_CreateUser";
-import {getAllUserRedux,deleteUserRedux} from "../../Redux/actions";
- 
+import Modal_CreateInPut from "../../Components/Modal_CreateInPut";
+import { useForm, SubmitHandler } from "react-hook-form";
+import {
+  getAllUserRedux,
+  deleteUserRedux,
+  createUserRedux,
+  updateUserRedux,
+  getOneUser,
+} from "../../Redux/actions";
+
 const Dash_board = () => {
-  const [users, setUsers] = useState({address: "",email: "",firstName: "",gender: "",id: Number,lastName: "",phonenumber: "",});
+  const [users, setUsers] = useState({
+    address: "",
+    email: "",
+    firstName: "",
+    gender: "",
+    id: Number,
+    lastName: "",
+    phonenumber: "",
+  });
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const arrUsersss = useSelector((state) => state.user.arrUser);
-  const toggle = () => { setModal(!modal) };
-  useEffect( ()=>{
-      dispatch(getAllUserRedux());
-    },[dispatch] );
-
-  useEffect( ()=>{
-    if(arrUsersss){
-      console.log('Effect Arr Redux');
+  const oneUserRedux = useSelector((state) => state.user.user);
+  const [userId,setUserId] = useState({});
+  const [aciton, setAciton] = useState("CREATE");
+  const toggle = () => {
+    if (modal === true) {
+      reset();
+      {
+        setAciton("CREATE");
+      }
     }
-  },[arrUsersss] );
+    setModal(!modal);
+  };
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+    setValue,
+    getValues,
+    reset,
+    watch,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      address: "",
+      firstName: "",
+      lastName: "",
+    },
+    resetOptions: {},
+  });
 
-  const handleDelete = (item)=>{
+  // Muont + Update if [dispatch] be changed
+  useEffect(() => {
+    dispatch(getAllUserRedux());
+  }, [dispatch]);
+
+  const handleDelete = (item) => {
     dispatch(deleteUserRedux(item.id));
-    alert('Xoá Thành Công');
-  }
-  const handleEdit = (item)=>{
+    alert("Xoá Thành Công");
+  };
+  const handleEdit = (item) =>  {
+    console.log('item of list',item);
+    console.log('item of Redux',item);
+    setUserId(item.id);
+    if (item) {
+      setValue("email", item.email);
+      setValue("password", item.password);
+      setValue("firstName", item.firstName);
+      setValue("lastName", item.lastName);
+      setValue("address", item.address);
+    }
+    setAciton("EDIT");
+    toggle();
+  };
+  const onSubmit = () => {
+    console.log('action of onSubmmit',aciton);
+    if(aciton === "CREATE"){
+      console.log('da vao CREATE');
+      const valueFormSubmit = getValues();
+      const copyValueFormSubmit = { ...valueFormSubmit, action: "CREATE" };
+      dispatch(createUserRedux(copyValueFormSubmit));
+      console.log("valueFormSubmit", copyValueFormSubmit);
+      alert("User created successfully!");
+      reset();
       toggle();
+      }
+    if(aciton==="EDIT"){
+      const a = getValues();
+      const b ={...a,id : userId}
+    dispatch(updateUserRedux(b));
+      toggle();
+    }
 
 
-  }
+  };
   return (
     <div className="admin_form">
-      {  console.log('JSX')}
       <div className="dashboard_left">
         <h1>CRUD OPERATIONS</h1>
         <div className="inf_user">
@@ -95,7 +164,15 @@ const Dash_board = () => {
             </span>
           </div>
           <div>
-            <Modal_CreateUser modal={modal} toggle={toggle}   />
+            <Modal_CreateInPut
+              register={register}
+              errors={errors}
+              modal={modal}
+              toggle={toggle}
+              onSubmit={onSubmit}
+              aciton={aciton}
+              setAciton={setAciton}
+            />
           </div>
         </div>
         <div className="bot_contain">
@@ -173,6 +250,7 @@ const Dash_board = () => {
                           className="status delivered asd"
                           onClick={() => {
                             handleEdit(item);
+                            setAciton("EDIT");
                           }}
                         >
                           Edit User
