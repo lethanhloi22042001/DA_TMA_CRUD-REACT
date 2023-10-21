@@ -16,6 +16,7 @@ import {
 
 const Dash_board = () => {
   const dispatch = useDispatch();
+  const [modalAction, setModalAction] = useState("Create");
   const arrUsersss = useSelector((state) => state.user.arrUser); // Mảng user
   const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal Thằng nhận data 1 Item
   const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
@@ -29,7 +30,8 @@ const Dash_board = () => {
     alert("Xoá Thành Công");
   };
   const handleEdit = (item) => {
-    console.log(item, "item");
+    // setModalAction("Edit");
+    setOpenModal(true);
     setItemDataModal(item);
   };
   const onSubmit = (data, value, reset) => {
@@ -41,7 +43,7 @@ const Dash_board = () => {
       setOpenModal(false);
       reset()
     } else {
-      dispatch(updateUserRedux({ data, id: value.id }));
+      dispatch(updateUserRedux({ ...data, id: value.id }));
       console.log("valueFormSubmit", data);
       alert("User edit successfully!");
       setOpenModal(false);
@@ -111,14 +113,16 @@ const Dash_board = () => {
             </span>
           </div>
           <div>
-            <Button color="danger" onClick={() => setOpenModal(true)}> 
-              {"Add New User 13"}
+            <Button color="danger" onClick={() => {setOpenModal(true);setModalAction("Create")}}> 
+              {"Add New User"}
             </Button>
             <Modal_CreateInPut
               modalValue={itemDataModal}
               onSubmit={onSubmit}
               isOpenModal={openModal}
               setIsOpenModal={setOpenModal}
+              modalAction = {modalAction} // Set Create - Edit
+              setModalAction = {setModalAction} // Set Create - Edit
             />
           </div>
         </div>
@@ -196,8 +200,9 @@ const Dash_board = () => {
                         <button
                           className="status delivered asd"
                           onClick={() => {
+                            setModalAction("Edit");
                             handleEdit(item);
-                            setOpenModal(true);
+                            // setOpenModal(true);
                           }}
                         >
                           Edit User

@@ -10,6 +10,9 @@ const Modal_CreateInPut = ({
   modalValue,
   isOpenModal,
   setIsOpenModal,
+  modalAction,   // Set Create - Edit
+  setModalAction, // Set Create - Edit
+
 }) => {
   const {
     handleSubmit,
@@ -122,9 +125,7 @@ const Modal_CreateInPut = ({
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={handleOnSubmit}>
-            {modalValue ? "Edit" : "Create"}{" "}
-            {/* is Data 1 item ==> Edit : Create */}
-            {/* xử lí xong UI/ EDIT CREATE */}
+            {modalAction ==='Create' ? "Create" : "Edit"}{" "}
           </Button>
           <Button color="secondary" onClick={handleCancle}>
             Cancel
