@@ -14,30 +14,12 @@ import {
 } from "../../Redux/actions";
 
 const Dash_board = () => {
-  const [users, setUsers] = useState({
-    address: "",
-    email: "",
-    firstName: "",
-    gender: "",
-    id: Number,
-    lastName: "",
-    phonenumber: "",
-  });
   const dispatch = useDispatch();
-  const [modal, setModal] = useState(false);
+  const [isModal, setIsModal] = useState(false);
   const arrUsersss = useSelector((state) => state.user.arrUser);
-  const oneUserRedux = useSelector((state) => state.user.user);
   const [userId,setUserId] = useState({});
   const [aciton, setAciton] = useState("CREATE");
-  const toggle = () => {
-    if (modal === true) {
-      reset();
-      {
-        setAciton("CREATE");
-      }
-    }
-    setModal(!modal);
-  };
+  
   const {
     handleSubmit,
     formState: { errors },
@@ -67,8 +49,6 @@ const Dash_board = () => {
     alert("Xoá Thành Công");
   };
   const handleEdit = (item) =>  {
-    console.log('item of list',item);
-    console.log('item of Redux',item);
     setUserId(item.id);
     if (item) {
       setValue("email", item.email);
@@ -77,29 +57,24 @@ const Dash_board = () => {
       setValue("lastName", item.lastName);
       setValue("address", item.address);
     }
-    setAciton("EDIT");
-    toggle();
+    setAciton("UPDATE");
+
   };
   const onSubmit = () => {
-    console.log('action of onSubmmit',aciton);
     if(aciton === "CREATE"){
-      console.log('da vao CREATE');
       const valueFormSubmit = getValues();
-      const copyValueFormSubmit = { ...valueFormSubmit, action: "CREATE" };
-      dispatch(createUserRedux(copyValueFormSubmit));
-      console.log("valueFormSubmit", copyValueFormSubmit);
+      dispatch(createUserRedux(valueFormSubmit));
       alert("User created successfully!");
       reset();
-      toggle();
+      setIsModal(false);
       }
-    if(aciton==="EDIT"){
+    if(aciton==="UPDATE"){
       const a = getValues();
       const b ={...a,id : userId}
     dispatch(updateUserRedux(b));
-      toggle();
+    setIsModal(false);
+
     }
-
-
   };
   return (
     <div className="admin_form">
@@ -165,13 +140,14 @@ const Dash_board = () => {
           </div>
           <div>
             <Modal_CreateInPut
+              isModal = {isModal}
+              setIsModal = {setIsModal}
               register={register}
               errors={errors}
-              modal={modal}
-              toggle={toggle}
               onSubmit={onSubmit}
               aciton={aciton}
               setAciton={setAciton}
+              reset = {reset}
             />
           </div>
         </div>
@@ -250,7 +226,8 @@ const Dash_board = () => {
                           className="status delivered asd"
                           onClick={() => {
                             handleEdit(item);
-                            setAciton("EDIT");
+                            setIsModal(true);
+                            setAciton("UPDATE");
                           }}
                         >
                           Edit User

@@ -8,34 +8,31 @@ import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 const Modal_CreateInPut = ({
   register,
   errors,
-  modal,
-  toggle,
+  isModal, // Open toggle Modle
+  setIsModal,
+  setAciton,
   onSubmit, 
   aciton,
-  setAciton
+  reset
+
   
 }) => {
-  const handleCancle = ()=>{
-    toggle();
-  }
+   
   
   return (
     <>
-    {console.log()}
-      <Button color="danger" onClick={toggle}>
+      <Button color="danger" onClick={()=>{setIsModal(true);setAciton("CREATE");reset()}}>
         {"Add New User"}
       </Button>
-      <Modal isOpen={modal} toggle={toggle} className={"this. className"}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+      <Modal isOpen={isModal} toggle={() =>{}}>
+        <ModalHeader >Modal title</ModalHeader>
         <ModalBody>
           <form>
             <div class="container">
               <div class="form-group row">
                 <div class="col-md-6 mb-4">
                   <InpusCps
-                    
                     register={register}
-
                     label="email"
                     type="email"
                     placeholder="Pls enter the here :V "
@@ -99,9 +96,9 @@ const Modal_CreateInPut = ({
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={onSubmit} >
-            {aciton === 'CREATE' ? ' Thêm' : "Cập Nhật"}
+            {aciton === 'CREATE' ? ' CREATE' : "UPDATE"}
           </Button>
-          <Button color="secondary" onClick={handleCancle}>
+          <Button color="secondary" onClick={()=>{setIsModal(false)}}>
         
             Cancel
           </Button>
