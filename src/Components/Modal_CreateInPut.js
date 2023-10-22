@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 
 const Modal_CreateInPut = ({
   onSubmit,
-  modalValue,
+  modalValue, // item edit
   isOpenModal,
   setIsOpenModal,
   modalAction,   // Set Create - Edit
@@ -45,7 +45,9 @@ const Modal_CreateInPut = ({
       setValue("lastName", modalValue.lastName);
     }
   }, [modalValue]); // bắn trên xuống -> be Changed , thì nạp lại
-
+  // Bắn dữ liệu xuống ,  dùng setValue để tự nạp lại ở inPut
+  //Ô input chỉ cần dùng useEffect thấy thay đổi dữ liệu của Edit thì nạp lại
+  // Đẳng cấp của useEffect khi có sự thay đổi
   const handleOnSubmit = handleSubmit((data) => {
     onSubmit(data, modalValue, reset); //modalValue nhận lại data 1 item đã được set
     //modalValue => Lấy từ Cha xuống

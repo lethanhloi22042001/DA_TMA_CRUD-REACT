@@ -18,7 +18,7 @@ const Dash_board = () => {
   const dispatch = useDispatch();
   const [modalAction, setModalAction] = useState("Create");
   const arrUsersss = useSelector((state) => state.user.arrUser); // Mảng user
-  const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal Thằng nhận data 1 Item
+  const [itemDataModal, setItemDataModal] = useState(null); 
   const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
   // Muont + Update if [dispatch] be changed
   useEffect(() => {
