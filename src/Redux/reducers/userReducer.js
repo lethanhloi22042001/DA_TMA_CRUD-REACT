@@ -1,11 +1,14 @@
 const initial_state = {
-  arrUser: [],
-  user: {},
+  arrUser: [], //
+  user: {}, //arrUser và user là hai phần của trạng thái (state) được quản lý bởi Redux
 };
 
-const userReducer = (state = initial_state, action) => {
+//userReducer là hàm để => thay đổi xử lí hàm trạng trái
+//state = initial_state : Là nơi lưu trữ toàn bộ trạng thái của ứng dụng ở mức Global
+//action : đối tượng trả về action có thể gồm "1 chuỗi String + data(được xử lí ở actions)"
+//store chứa( state = initial_state) : chứa toàn bộ thông tin trạng thái của ứng dụng(arrUser,user)
 
-  console.log('Reducer action',action);
+const userReducer = (state = initial_state, action) => {
   switch (action.type) {
     //1 User
     case "GET_ONE_USER_SUCCESS":

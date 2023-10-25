@@ -20,6 +20,9 @@ const Dash_board = () => {
   const arrUsersss = useSelector((state) => state.user.arrUser); // Mảng user
   const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal Thằng nhận data 1 Item
   const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
+  const user = useSelector((state) => state.user.user);
+
+  console.log("useSelector k mất", user, arrUsersss);
   // Muont + Update if [dispatch] be changed
   useEffect(() => {
     dispatch(getAllUserRedux());
@@ -33,21 +36,23 @@ const Dash_board = () => {
     // setModalAction("Edit");
     setOpenModal(true);
     setItemDataModal(item);
+    dispatch(getOneUser(item));
   };
   const onSubmit = (data, value, reset) => {
-    if (!value) { //value chính là modalValue
-                  // Nếu có chọn 1 item thì là value => EDIT
+    if (!value) {
+      //value chính là modalValue
+      // Nếu có chọn 1 item thì là value => EDIT
       dispatch(createUserRedux(data));
       console.log("valueFormSubmit", data);
       alert("User created successfully!");
       setOpenModal(false);
-      reset()
+      reset();
     } else {
       dispatch(updateUserRedux({ ...data, id: value.id }));
       console.log("valueFormSubmit", data);
       alert("User edit successfully!");
       setOpenModal(false);
-      reset()
+      reset();
     }
   };
   return (
@@ -92,28 +97,14 @@ const Dash_board = () => {
       </div>
       <div className="dashboard_right">
         <div className="top_contain">
-          <div className="btn_search" aria-label="Search">
-            <span class="DocSearch-Button-Placeholder">Search</span>
-            <span class="DocSearch-Button-Container">
-              <svg
-                width="20"
-                height="20"
-                class="DocSearch-Search-Icon"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
-                  stroke="currentColor"
-                  fill="none"
-                  fill-rule="evenodd"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </span>
-          </div>
           <div>
-            <Button color="danger" onClick={() => {setOpenModal(true);setModalAction("Create")}}> 
+            <Button
+              color="danger"
+              onClick={() => {
+                setOpenModal(true);
+                setModalAction("Create");
+              }}
+            >
               {"Add New User"}
             </Button>
             <Modal_CreateInPut
@@ -121,8 +112,8 @@ const Dash_board = () => {
               onSubmit={onSubmit}
               isOpenModal={openModal}
               setIsOpenModal={setOpenModal}
-              modalAction = {modalAction} // Set Create - Edit
-              setModalAction = {setModalAction} // Set Create - Edit
+              modalAction={modalAction} // Set Create - Edit
+              setModalAction={setModalAction} // Set Create - Edit
             />
           </div>
         </div>
