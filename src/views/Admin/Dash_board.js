@@ -16,14 +16,14 @@ import {
 
 const Dash_board = () => {
   const dispatch = useDispatch();
-  const [modalAction, setModalAction] = useState("Create");
   const arrUsersss = useSelector((state) => state.user.arrUser); // Mảng user
-  const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal Thằng nhận data 1 Item
+  
+  const [modalAction, setModalAction] = useState("Create");
+  const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal data 1 Item
   const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
-  const user = useSelector((state) => state.user.user);
+  // const user = useSelector((state) => state.user.oneUser );
 
-  console.log("useSelector k mất", user, arrUsersss);
-  // Muont + Update if [dispatch] be changed
+  
   useEffect(() => {
     dispatch(getAllUserRedux());
   }, [dispatch]);
@@ -33,23 +33,18 @@ const Dash_board = () => {
     alert("Xoá Thành Công");
   };
   const handleEdit = (item) => {
-    // setModalAction("Edit");
     setOpenModal(true);
     setItemDataModal(item);
     dispatch(getOneUser(item));
   };
   const onSubmit = (data, value, reset) => {
     if (!value) {
-      //value chính là modalValue
-      // Nếu có chọn 1 item thì là value => EDIT
       dispatch(createUserRedux(data));
-      console.log("valueFormSubmit", data);
       alert("User created successfully!");
       setOpenModal(false);
       reset();
     } else {
       dispatch(updateUserRedux({ ...data, id: value.id }));
-      console.log("valueFormSubmit", data);
       alert("User edit successfully!");
       setOpenModal(false);
       reset();
@@ -108,10 +103,12 @@ const Dash_board = () => {
               {"Add New User"}
             </Button>
             <Modal_CreateInPut
-              modalValue={itemDataModal}
-              onSubmit={onSubmit}
-              isOpenModal={openModal}
-              setIsOpenModal={setOpenModal}
+              modalValue={itemDataModal} // itemEdit
+              onSubmit={onSubmit}        //CallBack Fnc Submit
+
+              setIsOpenModal={setOpenModal} // OpenToggle
+              isOpenModal={openModal} // OpenToggle
+
               modalAction={modalAction} // Set Create - Edit
               setModalAction={setModalAction} // Set Create - Edit
             />

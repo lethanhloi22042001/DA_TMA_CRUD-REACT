@@ -1,4 +1,4 @@
-const actionTypes = Object.freeze({
+const actionTypes ={
     
     //1 User
     GET_ONE_USER_SUCCESS :'GET_ONE_USER_SUCCESS',
@@ -16,6 +16,6 @@ const actionTypes = Object.freeze({
     GET_ALLUSER_SUCCESS: 'GET_ALLUSER_SUCCESS',
     GET_ALLUSER_FAIL: 'GET_ALLUSER_FAIL',
 
-})
+}
 
 export default actionTypes;

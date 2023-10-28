@@ -12,6 +12,7 @@ function ComponentB() {
       <div>
         <h2>Component B</h2>
         <p>Data  B </p>
+        {/* <p>Data  {dataA} </p> */}
         <ComponentC />
       </div>
     // </ContextB.Provider>

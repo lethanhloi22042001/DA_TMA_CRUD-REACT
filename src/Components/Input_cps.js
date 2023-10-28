@@ -2,17 +2,16 @@ import React, { useState } from "react";
 
 const InpusCps = ({ label, type, placeholder, errors, register, value,defaultValue }) => {
   const isEverythingGood = !errors[label] && value !== ""; 
-  const inputStyles = {
-    marginBottom: "20px",
-    borderWidth: "1px 1px 1px 14px",
-    borderStyle: "solid",
-    borderColor:
-      "rgb(191, 22, 80) rgb(191, 22, 80) rgb(191, 22, 80) rgb(236, 89, 144)",
-    borderImage: "initial",
-    background: "rgb(251, 236, 242)",
-  };
+  // const inputStyles = {
+  //   marginBottom: "20px",
+  //   borderWidth: "1px 1px 1px 14px",
+  //   borderStyle: "solid",
+  //   borderColor:
+  //     "rgb(191, 22, 80) rgb(191, 22, 80) rgb(191, 22, 80) rgb(236, 89, 144)",
+  //   borderImage: "initial",
+  //   background: "rgb(251, 236, 242)",
+  // };
   return (
-   
     <>
       <label htmlFor={label} className="form-label">
         {label}

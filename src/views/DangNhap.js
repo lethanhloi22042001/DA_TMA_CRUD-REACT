@@ -9,7 +9,7 @@ import userService from "../Services/userService";
 const DangNhap = ()=>{
     const [user, setUser] = useState(null);
     const [dataForm, setDataFrom] = useState({});
-    const values = useSelector((state) => state.user.user);
+    const values = useSelector((state) => state.user.oneUser);
 
     const {
         handleSubmit,

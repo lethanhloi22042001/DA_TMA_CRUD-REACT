@@ -1,5 +1,6 @@
 import React, { useState, createContext } from 'react';
 import ComponentB from './ComponentB';
+import ComponentD from './ComponentD';
 // Tạo một context cho dữ liệu từ A
 export  const ContextA = createContext();
 
@@ -10,6 +11,7 @@ function ComponentA() {
     setDataA(e)
   }
   return (
+    <>
     <ContextA.Provider value={{ dataA }}>
       <div>
         <input type="" name="" value={dataA} onChange={ (e)=>{handleOnchange(e.target.value)}}/>
@@ -18,6 +20,8 @@ function ComponentA() {
         <ComponentB />
       </div>
     </ContextA.Provider>
+    <ComponentD/>
+    </>
   );
 }
 

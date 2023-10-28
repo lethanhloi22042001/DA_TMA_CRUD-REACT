@@ -1,3 +1,4 @@
+import '../../Components/Scss/Header.scss'
 const Header = ()=>{
     return (
      <div className="topnav">

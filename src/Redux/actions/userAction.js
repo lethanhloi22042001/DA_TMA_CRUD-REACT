@@ -18,8 +18,6 @@ export const getAllUserRedux = () => {
       let res = await userService.getAllUser("ALL");
       if (res && res.errCode === 0) {
         dispatch(getAllUserSucess(res.users.reverse()));
-      } else {
-        dispatch(getAllUserFail());
       }
     } catch (errCode) {
       dispatch(getAllUserFail());

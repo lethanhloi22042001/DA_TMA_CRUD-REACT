@@ -1,10 +1,9 @@
-//CounterReduxStore
-// CounterReduxStore.js
+//CounterRedux_B
 import React from 'react';
 import { useCounterStore } from './CounterStore';
 
-function CounterReduxStore() {
-  const [state, dispatch] = useCounterStore();
+function CounterRedux_B() {
+  const [state_B, dispatch] = useCounterStore();
 
   const increment = () => {
     dispatch({ type: 'INCREMENT' });
@@ -16,12 +15,12 @@ function CounterReduxStore() {
 
   return (
     <div>
-      <h1>Counter (useReducer)</h1>
-      <p>Count: {state.count}</p>
+      <h1>Counter (useReducer _ B)</h1>
+      <p>Count: {state_B.count}</p>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Decrement</button>
     </div>
   );
 }
 
-export default CounterReduxStore;
+export default CounterRedux_B;

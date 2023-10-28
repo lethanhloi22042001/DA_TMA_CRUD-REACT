@@ -1,10 +1,9 @@
 import React, { useReducer } from 'react';
-import { getOneUser } from '../../Redux/actions';
-
+import { useCounterStore } from './CounterStore';
 
 const initialState = {
   count: 0,
-  user : []
+  oneUser : []
 };
 
 const counterReducer = (state, action) => {
@@ -15,8 +14,8 @@ const counterReducer = (state, action) => {
       return { ...state, count: state.count - 1 };
     case 'GET_ONE_USER_SUCCESS':
       let copyUser = { ...state };
-      copyUser.user = action.data;
-      console.log(' copyUser.user', copyUser.user);
+      copyUser.oneUser = action.data;
+      console.log(' copyUser.oneUser', copyUser.oneUser);
       return { ...copyUser };
     default:
       return state;
@@ -29,9 +28,10 @@ export const getOneUserUseReducer = (data) => ({
 
 function ReDucerReact() {
   const [state, dispatch] = useReducer(counterReducer, initialState);
+  // const [state, dispatch] = useReducer(counterReducer, initialState);
 
   const increment = () => {
-    dispatch(getOneUserUseReducer({id: 226, email: 'long123@gmail.com', firstName: 'le', lastName: 'thanh', address: 'quang binh'}));
+    // dispatch(getOneUserUseReducer({id: 226, email: 'long123@gmail.com', firstName: 'le', lastName: 'thanh', address: 'quang binh'}));
   };
 
   const decrement = () => {

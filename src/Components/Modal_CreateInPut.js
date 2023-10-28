@@ -35,8 +35,6 @@ const Modal_CreateInPut = ({
     reset();
   };
   
-
-  //  ????
   useEffect(() => {
     if (modalValue) {
       setValue("email", modalValue.email);
@@ -48,19 +46,18 @@ const Modal_CreateInPut = ({
   }, [modalValue]); // bắn trên xuống -> be Changed , thì nạp lại
 
   const handleOnSubmit = handleSubmit((data) => {
-    onSubmit(data, modalValue, reset); //modalValue nhận lại data 1 item đã được set
-    //modalValue => Lấy từ Cha xuống
+    onSubmit(data, modalValue, reset);
   });
 
   return (
     <>
       <Modal isOpen={isOpenModal} className={"this. className"}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>Create / Update User</ModalHeader>
         <ModalBody>
-          <form>
-            <div class="container">
-              <div class="form-group row">
-                <div class="col-md-6 mb-4">
+          {/* <form> */}
+            <div className="container">
+              <div className="form-group row">
+                <div className="col-md-6 mb-4">
                   <InpusCps
                     register={register}
                     label="email"
@@ -71,7 +68,7 @@ const Modal_CreateInPut = ({
                     errors={errors}
                   />
                 </div>
-                <div class="col-md-6 ">
+                <div className="col-md-6 ">
                   <InpusCps
                     register={register}
                     label="password"
@@ -84,8 +81,8 @@ const Modal_CreateInPut = ({
                 </div>
               </div>
 
-              <div class="form-group row">
-                <div class="col-md-6 mb-4">
+              <div className="form-group row">
+                <div className="col-md-6 mb-4">
                   <InpusCps
                     register={register}
                     label="firstName"
@@ -96,7 +93,7 @@ const Modal_CreateInPut = ({
                     defaultValue={""}
                   />
                 </div>
-                <div class="col-md-6">
+                <div className="col-md-6">
                   <InpusCps
                     register={register}
                     label="lastName"
@@ -108,8 +105,8 @@ const Modal_CreateInPut = ({
                   />
                 </div>
               </div>
-              <div class="form-group row">
-                <div class="col-md-12">
+              <div className="form-group row">
+                <div className="col-md-12">
                   <InpusCps
                     register={register}
                     label="address"
@@ -122,7 +119,7 @@ const Modal_CreateInPut = ({
                 </div>
               </div>
             </div>
-          </form>
+          {/* </form> */}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={handleOnSubmit}>
