@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import InpusCps from "../Components/Input_cps";
 import "../Components/Scss/Modal_CreateUser.scss";
 import { useForm } from "react-hook-form";
-
+import { useGetAllUsers, useCreateUser, useDeleteUser } from '../Queries/users_ReactQuery';
 const Modal_CreateInPut = ({
   onSubmit,
   modalValue,
@@ -45,8 +45,8 @@ const Modal_CreateInPut = ({
     }
   }, [modalValue]); // bắn trên xuống -> be Changed , thì nạp lại
 
-  const handleOnSubmit = handleSubmit((data) => {
-    onSubmit(data, modalValue, reset);
+  const handleOnSubmit = handleSubmit( async(data) => {
+     onSubmit(data, modalValue, reset);
   });
 
   return (
@@ -57,6 +57,17 @@ const Modal_CreateInPut = ({
           {/* <form> */}
             <div className="container">
               <div className="form-group row">
+                <div className="col-md-12 mb-4">
+                  <InpusCps
+                    register={register}
+                    label="id"
+                    type="id"
+                    placeholder="Pls enter the here :V "
+                    defaultValue={""}
+                    //   value={"watchedValues.email"}
+                    errors={errors}
+                  />
+                </div>
                 <div className="col-md-6 mb-4">
                   <InpusCps
                     register={register}

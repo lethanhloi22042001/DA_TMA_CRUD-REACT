@@ -12,34 +12,43 @@ import {
   createUserRedux,
   updateUserRedux,
   getOneUser,
+  //ADMIN
+  createUserRedux_Admin,
+  deleteUserRedux_Admin,
 } from "../../Redux/actions";
 
 const Dash_board = () => {
-  const dispatch = useDispatch();
-  const arrUsersss = useSelector((state) => state.user.arrUser); // Mảng user
   
+  const dispatch = useDispatch();
+  const arrUsersss = useSelector((state) => state.admin.userArr_Admin); // // React-Redux
   const [modalAction, setModalAction] = useState("Create");
   const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal data 1 Item
   const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
-  // const user = useSelector((state) => state.user.oneUser );
 
+
+  const [isReLoad,setIsReLoad] = useState(false);
+  console.log('arrUsersss',arrUsersss);
+  useEffect( ()=>{
+  if (isReLoad) {
+      setIsReLoad(false);
+    }
+  },[isReLoad] );
   
-  useEffect(() => {
-    dispatch(getAllUserRedux());
-  }, [dispatch]);
-
-  const handleDelete = (item) => {
-    dispatch(deleteUserRedux(item.id));
+  const handleDelete = async (item) => {
+    console.log('item,',item.id);
+    dispatch(deleteUserRedux_Admin(item.id));
+    setIsReLoad(true)
     alert("Xoá Thành Công");
   };
   const handleEdit = (item) => {
     setOpenModal(true);
     setItemDataModal(item);
     dispatch(getOneUser(item));
-  };
-  const onSubmit = (data, value, reset) => {
+  }; 
+  const onSubmit = async (data, value, reset) => {
     if (!value) {
-      dispatch(createUserRedux(data));
+      dispatch(createUserRedux_Admin(data));
+      //[...copyState.userArr_Admin, action.data]
       alert("User created successfully!");
       setOpenModal(false);
       reset();
@@ -165,17 +174,16 @@ const Dash_board = () => {
             </thead>
             <tbody>
               {arrUsersss &&
-                arrUsersss.map((item) => {
+                arrUsersss.map((item,index) => {
                   return (
-                    <tr key={item.id}>
+                    <tr key={index}>
                       <td>{item.id}</td>
                       <td>{item.email}</td>
                       <td> {item.firstName}</td>
                       <td> {item.lastName} </td>
                       <td> {item.address} </td>
-                      <td>{/* <strong> {item.phonenumber} </strong> */}</td>
+                      <td></td>
                       <td className="btn-addDelete">
-                        {/* <p className="status delivered">Delivered</p> */}
                         <button
                           className="status delivered asd1"
                           onClick={() => {
@@ -190,7 +198,6 @@ const Dash_board = () => {
                           onClick={() => {
                             setModalAction("Edit");
                             handleEdit(item);
-                            // setOpenModal(true);
                           }}
                         >
                           Edit User

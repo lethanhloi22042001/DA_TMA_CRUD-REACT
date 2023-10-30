@@ -11,7 +11,7 @@ import ComponentA from "./Todo/UseContext/ComponentA";
 import CounterRedux_A from "./Todo/ReduxLib_ReDucerReact/CounterRedux_A";
 import CounterRedux_B from "./Todo/ReduxLib_ReDucerReact/CounterRedux_B";
 import ReDucerReact from "./Todo/ReduxLib_ReDucerReact/ReDucerReact";
-import ReactQuery from "./Todo/ReactQuery";
+
 
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
             <Route path="/CounterRedux_A" element={<CounterRedux_A />}></Route>
             <Route path="/CounterRedux_B" element={<CounterRedux_B />}></Route>
             <Route path="/ReDucerReact" element={<ReDucerReact />}></Route>
-            <Route path="/ReactQuery" element={<ReactQuery />}></Route>
 
           </Route>
           <Route path="/admin/dash_board" element={<Dash_board />}></Route>

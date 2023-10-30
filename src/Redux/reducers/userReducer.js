@@ -16,7 +16,6 @@ const userReducer = (state = initial_state, action) => {
     case "GET_ALLUSER_SUCCESS":
       let copyArrUser = { ...state };
       copyArrUser.arrUser = action.data;
-      console.log('arrUser of Present', copyArrUser.arrUser);
       return { ...copyArrUser };
 
     case "GET_ALLUSER_FAIL":

@@ -16,7 +16,7 @@ const userPersistConfig = {
 };
 const rootReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
-  adminReducer: persistReducer(userPersistConfig, adminReducer),
+  admin: persistReducer(userPersistConfig, adminReducer),
 });
 
 export default rootReducer;

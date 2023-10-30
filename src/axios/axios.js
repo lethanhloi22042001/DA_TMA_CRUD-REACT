@@ -6,12 +6,10 @@ const instance = axios.create({
 
 //interceptor để xử lý lỗi từ phản hồi của API (dùng then catch)
 instance.interceptors.response.use((response) => {
-  // console.log(response, "1");
   const { data } = response;
   return response.data;
 });
 instance.interceptors.request.use((config) => {
-  // console.log(config, "2");
   return config;
 });
 
