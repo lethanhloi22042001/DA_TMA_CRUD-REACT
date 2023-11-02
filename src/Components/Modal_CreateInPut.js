@@ -35,7 +35,9 @@ const Modal_CreateInPut = ({
     reset();
   };
   
+  // useEffect(()=>{console.log('modalValue 2',modalValue);});
   useEffect(() => {
+    console.log('modalValue Modal',modalValue );
     if (modalValue) {
       setValue("email", modalValue.email);
       setValue("password", modalValue.password);
@@ -43,7 +45,7 @@ const Modal_CreateInPut = ({
       setValue("firstName", modalValue.firstName);
       setValue("lastName", modalValue.lastName);
     }
-  }, [modalValue]); // bắn trên xuống -> be Changed , thì nạp lại
+  }); // bắn trên xuống -> be Changed , thì nạp lại
 
   const handleOnSubmit = handleSubmit( async(data) => {
      onSubmit(data, modalValue, reset);

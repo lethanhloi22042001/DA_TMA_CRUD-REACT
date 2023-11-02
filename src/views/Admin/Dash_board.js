@@ -13,47 +13,46 @@ import {
   updateUserRedux,
   getOneUser,
   //ADMIN
-  createUserRedux_Admin,
+  createNewUserAdmin,
   deleteUserRedux_Admin,
+  updateUserAdmin,
 } from "../../Redux/actions";
 
 const Dash_board = () => {
-  
   const dispatch = useDispatch();
   const arrUsersss = useSelector((state) => state.admin.userArr_Admin); // // React-Redux
   const [modalAction, setModalAction] = useState("Create");
   const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal data 1 Item
   const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
 
-
-  const [isReLoad,setIsReLoad] = useState(false);
-  console.log('arrUsersss',arrUsersss);
-  useEffect( ()=>{
-  if (isReLoad) {
+  const [isReLoad, setIsReLoad] = useState(false);
+  console.log("arrUsersss", arrUsersss);
+  useEffect(() => {
+    if (isReLoad) {
       setIsReLoad(false);
     }
-  },[isReLoad] );
-  
+  }, [isReLoad]);
+
   const handleDelete = async (item) => {
-    console.log('item,',item.id);
+    console.log("item,", item.id);
     dispatch(deleteUserRedux_Admin(item.id));
-    setIsReLoad(true)
+    setIsReLoad(true);
     alert("Xoá Thành Công");
   };
   const handleEdit = (item) => {
+    console.log("item Edit", item);
     setOpenModal(true);
     setItemDataModal(item);
-    dispatch(getOneUser(item));
-  }; 
+  };
   const onSubmit = async (data, value, reset) => {
     if (!value) {
-      dispatch(createUserRedux_Admin(data));
-      //[...copyState.userArr_Admin, action.data]
+      dispatch(createNewUserAdmin(data));
       alert("User created successfully!");
       setOpenModal(false);
       reset();
     } else {
-      dispatch(updateUserRedux({ ...data, id: value.id }));
+      //updateUserAdmin
+      dispatch(updateUserAdmin(data));
       alert("User edit successfully!");
       setOpenModal(false);
       reset();
@@ -113,96 +112,65 @@ const Dash_board = () => {
             </Button>
             <Modal_CreateInPut
               modalValue={itemDataModal} // itemEdit
-              onSubmit={onSubmit}        //CallBack Fnc Submit
-
+              onSubmit={onSubmit} //CallBack Fnc Submit
               setIsOpenModal={setOpenModal} // OpenToggle
               isOpenModal={openModal} // OpenToggle
-
               modalAction={modalAction} // Set Create - Edit
               setModalAction={setModalAction} // Set Create - Edit
             />
           </div>
         </div>
         <div className="bot_contain">
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  {" "}
-                  Id{" "}
-                  <span className="icon-arrow">
-                    <i className="fas fa-arrow-up"></i>
-                  </span>
-                </th>
-                <th>
-                  {" "}
-                  Email{" "}
-                  <span className="icon-arrow">
-                    <i className="fas fa-arrow-up"></i>
-                  </span>
-                </th>
-                <th>
-                  {" "}
-                  Firs tName{" "}
-                  <span className="icon-arrow">
-                    <i className="fas fa-arrow-up"></i>
-                  </span>
-                </th>
-                <th>
-                  {" "}
-                  Last Name{" "}
-                  <span className="icon-arrow">
-                    <i className="fas fa-arrow-up"></i>
-                  </span>
-                </th>
-                <th>
-                  {" "}
-                  Address{" "}
-                  <span className="icon-arrow">
-                    <i className="fas fa-arrow-up"></i>
-                  </span>
-                </th>
-                <th>
-                  {" "}
-                  Password{" "}
-                  <span className="icon-arrow">
-                    <i className="fas fa-arrow-up"></i>
-                  </span>
-                </th>
-                <th>Handle Button </th>
+            <table className="table_top">
+            {/* định nghĩa */}
+            <thead> 
+              <tr>  
+                  <th></th>
+                      <th>Id</th>
+                      <th>Email</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Address</th>
+                      <th></th>
+                      <th></th>
               </tr>
             </thead>
+            </table>
+            
+            <table>
             <tbody>
               {arrUsersss &&
-                arrUsersss.map((item,index) => {
+                arrUsersss.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.email}</td>
-                      <td> {item.firstName}</td>
-                      <td> {item.lastName} </td>
-                      <td> {item.address} </td>
-                      <td></td>
-                      <td className="btn-addDelete">
-                        <button
-                          className="status delivered asd1"
-                          onClick={() => {
-                            handleDelete(item);
-                          }}
-                        >
-                          Deleted
-                        </button>
+                        <td><img className="user_img" src="https://picsum.photos/200" alt="Image description" /></td>
+                        <td>{item.id}</td>
+                        <td>{item.email}</td>
+                        <td> {item.firstName}</td>
+                        <td> {item.lastName} </td>
+                        <td> {item.address} </td>
 
-                        <button
-                          className="status delivered asd"
-                          onClick={() => {
-                            setModalAction("Edit");
-                            handleEdit(item);
-                          }}
-                        >
-                          Edit User
-                        </button>
-                      </td>
+                        <td className="btn-addDelete">
+                          <button
+                            className="status delivered asd1"
+                            onClick={() => {
+                              handleDelete(item);
+                            }}
+                          >
+                            Deleted
+                          </button>
+                        </td>
+                        <td>
+                              <button
+                                className="status delivered asd"
+                                onClick={() => {
+                                  setModalAction("Edit");
+                                  handleEdit(item);
+                                }}
+                              >
+                                Edit User
+                              </button>
+                        </td>
                     </tr>
                   );
                 })}
