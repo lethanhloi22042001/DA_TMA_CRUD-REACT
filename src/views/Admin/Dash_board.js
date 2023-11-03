@@ -1,10 +1,25 @@
 import "./Dash_board.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faBell,
+  faMagnifyingGlass,
+  faBackward,
+} from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal_CreateInPut from "../../Components/Modal_CreateInPut";
 import { Button } from "reactstrap";
+import Student_List from "../../Components/Student_List";
+import backImg from "../../Components/Pictures/top/back.png";
+import Course_img from "../../Components/Pictures/Left/Course.png";
+import Home_img from "../../Components/Pictures/Left/Home.png";
+import Payment_img from "../../Components/Pictures/Left/Payment.png";
+import Report_img from "../../Components/Pictures/Left/Report.png";
+import Setting_img from "../../Components/Pictures/Left/Setting.png";
+import Students_img from "../../Components/Pictures/Left/Students.png";
+import Sign_out from "../../Components/Pictures/Left/Sign-out.png";
+
 
 import {
   getAllUserRedux,
@@ -63,119 +78,79 @@ const Dash_board = () => {
       <div className="dashboard_left">
         <h1>CRUD OPERATIONS</h1>
         <div className="inf_user">
-          {/* <div className="user_img" >
-                    </div> */}
-          <img
-            className="user_img"
-            src="https://picsum.photos/200"
-            alt="Image description"
-          />
-
+          <img className="user_img" src="https://picsum.photos/200" alt="Image description" />
           <div className="user_name">Lê Thanh Lợi</div>
           <div className="user_position">Admin</div>
         </div>
         <div className="user_btn">
-          <button className="user_btn_chung" type="">
-            Home
-          </button>
-          <button className="user_btn_chung" type="">
-            Course
-          </button>
-          <button className="user_btn_chung" type="">
-            Students
-          </button>
-          <button className="user_btn_chung" type="">
-            Payment
-          </button>
-          <button className="user_btn_chung" type="">
-            Report
-          </button>
-          <button className="user_btn_chung" type="">
-            Settings
-          </button>
+          <div className="user_btn_chung user_btn_flex">
+            <div className="home_fix">
+              <img className="img_btn" src={Home_img} />
+            </div>
+            <div className="text_btn"> Home</div>
+          </div>
+
+          <div className="user_btn_chung user_btn_flex">
+            <div className="home_fix">
+              <img className="img_btn" src={Course_img} />
+            </div>
+            <div className="text_btn"> Home</div>
+          </div>
+
+          <div className="user_btn_chung user_btn_flex">
+            <div className="home_fix">
+              <img className="img_btn" src={Students_img} />
+            </div>
+            <div className="text_btn"> Students</div>
+          </div>
+          <div className="user_btn_chung user_btn_flex">
+            <div className="home_fix">
+              <img className="img_btn" src={Payment_img} />
+            </div>
+            <div className="text_btn"> Payment</div>
+          </div>
+
+          <div className="user_btn_chung user_btn_flex">
+            <div className="home_fix">
+              <img className="img_btn" src={Report_img} />
+            </div>
+            <div className="text_btn"> Students</div>
+          </div>
+          <div className="user_btn_chung user_btn_flex">
+            <div className="home_fix">
+              <img className="img_btn" src={Setting_img} />
+            </div>
+            <div className="text_btn"> Payment</div>
+          </div>
         </div>
         <div className="user_loginOut">
-          LogOut <FontAwesomeIcon icon={faArrowRight} bounce />
+          LogOut <img className="img_btn" src={Sign_out} />
         </div>
       </div>
       <div className="dashboard_right">
         <div className="top_contain">
-          <div>
-            <Button
-              color="danger"
-              onClick={() => {
-                setOpenModal(true);
-                setModalAction("Create");
-              }}
-            >
-              {"Add New User"}
-            </Button>
-            <Modal_CreateInPut
-              modalValue={itemDataModal} // itemEdit
-              onSubmit={onSubmit} //CallBack Fnc Submit
-              setIsOpenModal={setOpenModal} // OpenToggle
-              isOpenModal={openModal} // OpenToggle
-              modalAction={modalAction} // Set Create - Edit
-              setModalAction={setModalAction} // Set Create - Edit
-            />
+          <div className="left_btn">
+            <div className="btn_back">
+              <img src={backImg} style={{ cursor: "pointer" }} />
+            </div>
           </div>
+          <div className="right_btn">
+            <div className="btn_search">
+              <input placeholder="Search" className="input_search" value="" />
+              <div className="btn_find">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </div>
+            </div>
+            <div className="btn_ring">
+              <div className="btn_Search">
+                <FontAwesomeIcon icon={faBell} />
+              </div>
+            </div>
+          </div>
+         
         </div>
         <div className="bot_contain">
-            <table className="table_top">
-            {/* định nghĩa */}
-            <thead> 
-              <tr>  
-                  <th></th>
-                      <th>Id</th>
-                      <th>Email</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Address</th>
-                      <th></th>
-                      <th></th>
-              </tr>
-            </thead>
-            </table>
-            
-            <table>
-            <tbody>
-              {arrUsersss &&
-                arrUsersss.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                        <td><img className="user_img" src="https://picsum.photos/200" alt="Image description" /></td>
-                        <td>{item.id}</td>
-                        <td>{item.email}</td>
-                        <td> {item.firstName}</td>
-                        <td> {item.lastName} </td>
-                        <td> {item.address} </td>
-
-                        <td className="btn-addDelete">
-                          <button
-                            className="status delivered asd1"
-                            onClick={() => {
-                              handleDelete(item);
-                            }}
-                          >
-                            Deleted
-                          </button>
-                        </td>
-                        <td>
-                              <button
-                                className="status delivered asd"
-                                onClick={() => {
-                                  setModalAction("Edit");
-                                  handleEdit(item);
-                                }}
-                              >
-                                Edit User
-                              </button>
-                        </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+          <Student_List></Student_List>
         </div>
       </div>
     </div>
