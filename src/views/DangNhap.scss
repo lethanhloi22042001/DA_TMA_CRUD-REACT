@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     // background-color: rgb(251,193,34);
-    background-image: linear-gradient( to right top, #FEAF00 ,#F8D442,#F8D442 );
+    background-image: linear-gradient( to right top, #FEAF00 ,#FBC246,#F8D23E );
    
     .form_contain{
         padding: 40px 60px;
@@ -23,17 +23,18 @@
             font-size: 32px;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 43px;
+            margin-bottom: 28px;
             }
             .logo_text{
                 text-align: center;
                 .logo_text1{
                     font-size: 22px;
-                    font-weight: 600;
+                    font-weight: 400;
                 }
                 .logo_text2{
+                    margin-top: 8px;
                     font-size: 14px;
-                    font-weight: 300;
+                    font-weight: 600;
                     color: #6C6C6C;
                 }
             }
@@ -55,8 +56,9 @@
                 border-radius: 4px ;
                 border :  solid ;
                 text-align: center;
-                background-color: #F8D442;
+                background-color: #FEAF00;
                 border: none;
+                color: #FFFFFF;
                 margin-top: 4px;
                 &:focus {
                     outline: none; 
@@ -77,7 +79,7 @@
                     height: 44px;  
                     // color: #E5E5E5;
                     border-radius: 4px ;
-                    border :  solid ;
+                    border : 1px solid #E5E5E5 ;
                  
                 }
                  span {
@@ -115,8 +117,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
+                .forgotPass{
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #6C6C6C;
+                }
 
-
+                a{
+                    margin-left: 4px;
+                    color: #F8D442;
+                    font-size: 14px;
+                    font-weight: 400;
+                }
         }
         
     }

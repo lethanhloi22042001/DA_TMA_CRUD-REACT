@@ -57,20 +57,20 @@ const DangNhap = ()=>{
                      
                          <InpusCps
                              register={register}
-                             label="email"
-                             type="email"
-                             placeholder="Pls enter the here :V "
-                             value={'watchedValues.email'}
+                             label="Email"
+                             type="Email"
+                             placeholder="Enter your email"
+                             value={'watchedValues.Email'}
                              errors={errors}
                              />
                   </div>
                   <div className='inps_Chung inps_password'>
                          <InpusCps
                              register={register}
-                             label="password"
-                             type="password"
-                             placeholder="Pls enter the here :V "
-                             value={'watchedValues.password'}
+                             label="Password"
+                             type="Password"
+                             placeholder="Enter your password "
+                             value={'watchedValues.Password'}
                              errors={errors}
                              />
                   </div>
@@ -78,8 +78,8 @@ const DangNhap = ()=>{
                   <button className="inps_Chung " type=""> Submit</button>
                 </div>
                 <div className='footer'>
-                    <div>Forgot your password?</div>
-                    <a href="">Reset password</a>
+                    <div className='forgotPass'>Forgot your password?</div>
+                    <a href=""> Reset password</a>
                 </div>
             </form>
         </div>

@@ -5,15 +5,33 @@ import "./Scss/Student_List.scss";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Modal_CreateInPut from "./Modal_CreateInPut";
 
-const Student_List = () => {
+const Student_List = ({openModal,setOpenModal}) => {
+  
+
   return (
     <div className="student_form">
       <div className="head_btn" style={{ marginBottom: "10px" }}>
         <h1>Students List</h1>
         <div>
-        <Modal_CreateInPut/>
-          <Button/>
-          Hello
+            <Button
+              color="danger"
+              onClick={() => {
+
+                setOpenModal(true);
+                // setModalAction("Create");
+              }}
+            >
+              {"Add New User"}
+            </Button>
+            <Modal_CreateInPut
+              modalValue={"itemDataModal"} // itemEdit
+              onSubmit={"onSubmit"} //CallBack Fnc Submit
+              setIsOpenModal={setOpenModal} // OpenToggle
+              isOpenModal={openModal} // OpenToggle
+              modalAction={"modalAction"} // Set Create - Edit
+              setModalAction={"setModalAction"} // Set Create - Edit
+            />
+         
         </div>
       </div>
 

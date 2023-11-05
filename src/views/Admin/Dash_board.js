@@ -150,7 +150,11 @@ const Dash_board = () => {
          
         </div>
         <div className="bot_contain">
-          <Student_List></Student_List>
+          <Student_List
+              openModal = {openModal}
+              setOpenModal = {setOpenModal}
+          
+          />
         </div>
       </div>
     </div>
