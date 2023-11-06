@@ -54,7 +54,7 @@ const Modal_CreateInPut = ({
   return (
     <>
       <Modal isOpen={isOpenModal} className={"this. className"}>
-        <ModalHeader>Create / Update User</ModalHeader>
+        <ModalHeader style={{margin : "0 auto"}}>{modalAction}</ModalHeader>
         <ModalBody>
           {/* <form> */}
             <div className="container">

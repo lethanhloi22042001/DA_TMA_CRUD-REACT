@@ -55,7 +55,6 @@ const Dash_board = () => {
     alert("Xoá Thành Công");
   };
   const handleEdit = (item) => {
-    console.log("item Edit", item);
     setOpenModal(true);
     setItemDataModal(item);
   };
@@ -128,6 +127,7 @@ const Dash_board = () => {
         </div>
       </div>
       <div className="dashboard_right">
+        {/* HEADER */}
         <div className="top_contain">
           <div className="left_btn">
             <div className="btn_back">
@@ -149,11 +149,13 @@ const Dash_board = () => {
           </div>
          
         </div>
+        {/* Body->Right */}
         <div className="bot_contain">
           <Student_List
               openModal = {openModal}
               setOpenModal = {setOpenModal}
-          
+              setModalAction = {setModalAction}
+              modalAction = {modalAction}
           />
         </div>
       </div>
