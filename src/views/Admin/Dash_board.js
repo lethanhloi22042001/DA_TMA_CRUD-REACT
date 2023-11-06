@@ -21,57 +21,8 @@ import Students_img from "../../Components/Pictures/Left/Students.png";
 import Sign_out from "../../Components/Pictures/Left/Sign-out.png";
 
 
-import {
-  getAllUserRedux,
-  deleteUserRedux,
-  createUserRedux,
-  updateUserRedux,
-  getOneUser,
-  //ADMIN
-  createNewUserAdmin,
-  deleteUserRedux_Admin,
-  updateUserAdmin,
-} from "../../Redux/actions";
-
 const Dash_board = () => {
-  const dispatch = useDispatch();
-  const arrUsersss = useSelector((state) => state.admin.userArr_Admin); // // React-Redux
-  const [modalAction, setModalAction] = useState("Create");
-  const [itemDataModal, setItemDataModal] = useState(null); //setItemDataModal data 1 Item
-  const [openModal, setOpenModal] = useState(false); // Mở đóng toggle
-
-  const [isReLoad, setIsReLoad] = useState(false);
-  console.log("arrUsersss", arrUsersss);
-  useEffect(() => {
-    if (isReLoad) {
-      setIsReLoad(false);
-    }
-  }, [isReLoad]);
-
-  const handleDelete = async (item) => {
-    console.log("item,", item.id);
-    dispatch(deleteUserRedux_Admin(item.id));
-    setIsReLoad(true);
-    alert("Xoá Thành Công");
-  };
-  const handleEdit = (item) => {
-    setOpenModal(true);
-    setItemDataModal(item);
-  };
-  const onSubmit = async (data, value, reset) => {
-    if (!value) {
-      dispatch(createNewUserAdmin(data));
-      alert("User created successfully!");
-      setOpenModal(false);
-      reset();
-    } else {
-      //updateUserAdmin
-      dispatch(updateUserAdmin(data));
-      alert("User edit successfully!");
-      setOpenModal(false);
-      reset();
-    }
-  };
+  
   return (
     <div className="admin_form">
       <div className="dashboard_left">
@@ -152,10 +103,7 @@ const Dash_board = () => {
         {/* Body->Right */}
         <div className="bot_contain">
           <Student_List
-              openModal = {openModal}
-              setOpenModal = {setOpenModal}
-              setModalAction = {setModalAction}
-              modalAction = {modalAction}
+               
           />
         </div>
       </div>

@@ -1,23 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Scss/Student_List.scss";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Modal_CreateInPut from "./Modal_CreateInPut";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const Student_List = ({openModal,setOpenModal,modalAction,setModalAction}) => {
+import {
+  getAllUserRedux,
+  deleteUserRedux,
+  createUserRedux,
+  updateUserRedux,
+  getOneUser,
+  //ADMIN
+  createNewUserAdmin,
+  deleteUserRedux_Admin,
+  updateUserAdmin,
+} from "../Redux/actions";
 
-  const arrUserAdmin = useSelector((state) => state.admin.userArr_Admin);
-  const [userEdit,setUserEdit] = useState(null);
+const Student_List = () => {
+
+  const dispatch = useDispatch();
+
+  const [isOpen_Modal,setIsOpen_Modal] = useState(false); // mở modal
+  const [modalAction,setModalAction] =   useState('Create'); // Create or Edit Text
+  const arrUserAdmin = useSelector((state) => state.admin.userArr_Admin); // Mảng user
+  const [userEdit,setUserEdit] = useState(null); // đẩy userEdit xuống cong
+  const [isReLoad, setIsReLoad] = useState(false); // Reload lai trang
+
+  useEffect(() => {
+    if (isReLoad) {
+      setIsReLoad(false);
+    }
+  }, [isReLoad]);
 
   const handleOnclick_Edit = (item)=>{
-    console.log('da day duoc item ',item);
     setUserEdit(item);
     setModalAction("Edit")
-    setOpenModal(true);
+    setIsOpen_Modal(true);
+    setIsReLoad(false); // reaload lai trang
   }
 
+  const onSubmit = (data,itemEdit,reset)=>{
+    if(!itemEdit){
+       // dispatch(createNewUserAdmin(data));
+       setIsReLoad(true);
+       alert("Create Success");
+      
+    }else{
+      alert('Edit')
+      console.log('Edit');
+    }
+
+  }
   return (
     <div className="student_form">
       <div className="head_btn" style={{ marginBottom: "10px" }}>
@@ -26,8 +61,8 @@ const Student_List = ({openModal,setOpenModal,modalAction,setModalAction}) => {
             <Button
               color="danger"
               onClick={() => {
-
-                setOpenModal(true);
+                setUserEdit(); // khi nhấn cú là cho itemEdit rỗng
+                setIsOpen_Modal(true);
                 setModalAction("Create");
               }}
             >
@@ -35,11 +70,20 @@ const Student_List = ({openModal,setOpenModal,modalAction,setModalAction}) => {
             </Button>
             <Modal_CreateInPut
               modalValue={"itemDataModal"} // itemEdit
-              onSubmit={"onSubmit"} //CallBack Fnc Submit
-              setIsOpenModal={setOpenModal} // OpenToggle
-              isOpenModal={openModal} // OpenToggle
+
+              isOpenModal={isOpen_Modal} // OpenToggle
+              setIsOpenModal={setIsOpen_Modal} //Set OpenToggle
+
               modalAction={modalAction} // Set Create - Edit
               setModalAction={setModalAction} // Set Create - Edit
+              
+              userEdit = {userEdit}
+              setUserEdit = {setUserEdit}
+
+              onSubmit = {onSubmit} // Function submit
+
+              isReLoad = {isReLoad}
+               setIsReLoad = {setIsReLoad}
             />
          
         </div>
@@ -73,7 +117,7 @@ const Student_List = ({openModal,setOpenModal,modalAction,setModalAction}) => {
                   <div className="item_data t4">{item.phoneNumber}</div>
                   <div className="item_data t5">{item.ErollNumber}</div>
                   <div className="item_data t6">{item.days}</div>
-                  <div className="item_data t7" onClick={(item)=>{handleOnclick_Edit(item)}}>
+                  <div className="item_data t7" onClick={()=>{handleOnclick_Edit(item)}}>
                     <FontAwesomeIcon icon={faPen} />
                   </div>
                   <div className="item_data t7">
