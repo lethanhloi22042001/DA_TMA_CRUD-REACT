@@ -87,7 +87,7 @@ const Dash_board = () => {
           </div>
           <div className="right_btn">
             <div className="btn_search">
-              <input placeholder="Search" className="input_search" value="" />
+              <input placeholder="Search" className="input_search" />
               <div className="btn_find">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </div>

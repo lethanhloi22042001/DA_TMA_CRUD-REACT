@@ -1,6 +1,4 @@
 import actionTypes from "./actionTypes";
-import userService from "../../Services/adminService";
-import { initialState } from "../reducers/adminReducer";
 
 //CREATE_USER_ADMIN_SUCCESS
 

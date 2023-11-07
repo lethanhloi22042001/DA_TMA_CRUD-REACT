@@ -33,7 +33,13 @@ const Student_List = () => {
       setIsReLoad(false);
     }
   }, [isReLoad]);
+  
 
+  const handleOnclick_Delete = (item)=>{
+    console.log('item Delete',item);
+    dispatch(deleteUserRedux_Admin(item));
+    setIsReLoad(true); // reaload lai trang
+  }
   const handleOnclick_Edit = (item)=>{
     setUserEdit(item);
     setModalAction("Edit")
@@ -42,14 +48,14 @@ const Student_List = () => {
   }
 
   const onSubmit = (data,itemEdit,reset)=>{
-    if(!itemEdit){
-       // dispatch(createNewUserAdmin(data));
-       setIsReLoad(true);
-       alert("Create Success");
-      
-    }else{
-      alert('Edit')
-      console.log('Edit');
+    console.log('itemEdit co hay khong',itemEdit);
+    if(itemEdit === null){
+      dispatch(createNewUserAdmin(data));
+      alert("Create Success");
+      }else{
+        
+      dispatch(updateUserAdmin(data));
+      alert("Update Success");
     }
 
   }
@@ -61,7 +67,7 @@ const Student_List = () => {
             <Button
               color="danger"
               onClick={() => {
-                setUserEdit(); // khi nhấn cú là cho itemEdit rỗng
+                setUserEdit(null); // khi nhấn cú là cho itemEdit rỗng
                 setIsOpen_Modal(true);
                 setModalAction("Create");
               }}
@@ -69,8 +75,6 @@ const Student_List = () => {
               {"Add New User"}
             </Button>
             <Modal_CreateInPut
-              modalValue={"itemDataModal"} // itemEdit
-
               isOpenModal={isOpen_Modal} // OpenToggle
               setIsOpenModal={setIsOpen_Modal} //Set OpenToggle
 
@@ -121,7 +125,7 @@ const Student_List = () => {
                     <FontAwesomeIcon icon={faPen} />
                   </div>
                   <div className="item_data t7">
-                    <FontAwesomeIcon icon={faTrash} />
+                    <FontAwesomeIcon icon={faTrash} onClick={()=>{handleOnclick_Delete(item)}}/>
                   </div>
               </div>
             )

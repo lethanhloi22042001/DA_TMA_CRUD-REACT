@@ -4,9 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import InpusCps from "../Components/Input_cps";
 import "../Components/Scss/Modal_CreateUser.scss";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+
 const Modal_CreateInPut = ({
   onSubmit,
-  modalValue,
   isOpenModal,
   setIsOpenModal,
   userEdit,
@@ -35,6 +36,7 @@ const Modal_CreateInPut = ({
 
   const handleCancle = () => {
     setIsOpenModal(false);
+    setUserEdit(null);
     reset();
   };
 
@@ -49,8 +51,8 @@ const Modal_CreateInPut = ({
   }); // bắn trên xuống -> be Changed , thì nạp lại
 
   const handleOnSubmit = handleSubmit((data) => {
-    console.log('data of input',data);
-    onSubmit(data, modalValue, reset);
+    console.log('userEdit check',userEdit);
+    onSubmit(data, userEdit, reset);
     setIsReLoad(true); // Load Lại trang
     setIsOpenModal(false);
     reset()

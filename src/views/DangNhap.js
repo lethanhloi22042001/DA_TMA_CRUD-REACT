@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import userService from "../Services/userService";
 
+import { useNavigate } from 'react-router-dom';
 
 const DangNhap = ()=>{
     const [user, setUser] = useState(null);
     const [dataForm, setDataFrom] = useState({});
     const values = useSelector((state) => state.user.oneUser);
 
+    const navigate = useNavigate();
     const {
         handleSubmit,
         formState: { errors },
@@ -21,30 +23,30 @@ const DangNhap = ()=>{
         watch,
       } = useForm({
         defaultValues: {
-          email: "",
-          password: "",
-          address: "",
-          firstName: "",
-          lastName: "",
+          Email: "",
+          Password: "",
         },
         values, // Lấy dữ liệu API
         resetOptions: {},
       });
+
+     
+
       const onSubmit = async () => {
         try {
           const values = getValues();
           console.log("values", values);
-          await userService.createNewUserService(values);
-          setDataFrom(values);
-          alert("User created successfully!");
+          navigate('/admin/dash_board');
           reset();
+          
         } catch (error) {
           console.error("Error creating user:", error);
         }
       };
     return(
         <div className='form_login'>
-            <form id="form"  className='form_contain' onSubmit={handleSubmit(onSubmit)}>
+          
+            <form id="form"  className='form_contain'  onSubmit={handleSubmit(onSubmit)} >
                 <div className='logo'>
                     <h1>CRUD OPERATIONS</h1>
                     <div className="logo_text">
@@ -75,7 +77,7 @@ const DangNhap = ()=>{
                              />
                   </div>
                     
-                  <button className="inps_Chung " type=""> Submit</button>
+                  <button className="inps_Chung "> Submit</button>
                 </div>
                 <div className='footer'>
                     <div className='forgotPass'>Forgot your password?</div>

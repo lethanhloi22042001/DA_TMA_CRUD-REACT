@@ -20,6 +20,7 @@ function App() {
       <BrowserRouter>
       {/* Định nghĩa các đường dẫn, đồng thời sử dụng OutLet để sử dụng chung CPS của HOME */}
         <Routes>
+          <Route  path="/login" element={<DangNhap />}></Route>
           <Route path="/" element={<Home />}>
             <Route path="/dog" element={<Dog />}></Route>
             <Route path="/chicken" element={<Chicken />}></Route>
@@ -32,7 +33,7 @@ function App() {
 
           </Route>
           <Route path="/admin/dash_board" element={<Dash_board />}></Route>
-          <Route path="/login" element={<DangNhap />}></Route>
+          
         </Routes>
       </BrowserRouter>
     </div>
