@@ -34,7 +34,7 @@ const InpusCps = ({ label, type, placeholder, errors, register, value,defaultVal
           },
         })}
       />
-      <span>
+      <span style={{color : 'red'}}>
         {errors[label] && errors[label].message}
         {errors[label] && errors[label].message && isEverythingGood && "Everything looks good"}
       </span>

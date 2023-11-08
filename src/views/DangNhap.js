@@ -3,16 +3,21 @@ import InpusCps from '../Components/Input_cps'
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
-import userService from "../Services/userService";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Navigate, useLocation } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
-const DangNhap = ()=>{
+const DangNhap = ({setIsLogin,isLogin})=>{
     const [user, setUser] = useState(null);
     const [dataForm, setDataFrom] = useState({});
     const values = useSelector((state) => state.user.oneUser);
-
     const navigate = useNavigate();
+    
+    const arrUserAdmin = useSelector((state) => state.admin.userArr_Admin);
+    // console.log('Login arrUserAdmin',arrUserAdmin);
+
+    
+     
     const {
         handleSubmit,
         formState: { errors },
@@ -23,26 +28,38 @@ const DangNhap = ()=>{
         watch,
       } = useForm({
         defaultValues: {
-          Email: "",
-          Password: "",
+          email: "",
+          eassword: "",
         },
         values, // Lấy dữ liệu API
         resetOptions: {},
       });
 
-     
+      const handLogin = (data)=>{
+        const oneItem = arrUserAdmin.find(item => item.email === data.email);
+        if (!oneItem ) {
+          alert('Email is wrong');
+        } else if (data.email === oneItem.email && data.password !== oneItem.password) {
+          alert('Password is wrong');
+        } else if (data.email === oneItem.email && data.password === oneItem.password) {
+          localStorage.setItem('Login_Success', true);
+          reset();
+          setIsLogin(!isLogin);
+          navigate('/admin/dash_board');
+        } 
+      }
 
       const onSubmit = async () => {
         try {
           const values = getValues();
-          console.log("values", values);
-          navigate('/admin/dash_board');
-          reset();
+          handLogin(values);
           
         } catch (error) {
           console.error("Error creating user:", error);
         }
       };
+       
+      
     return(
         <div className='form_login'>
           
@@ -55,24 +72,24 @@ const DangNhap = ()=>{
                     </div>
                 </div>
                 <div className='inps'>
-                  <div className='inps_Chung inps_email'>
+                  <div className='inps_Chung inps_Email'>
                      
                          <InpusCps
                              register={register}
-                             label="Email"
-                             type="Email"
+                             label="email"
+                             type="email"
                              placeholder="Enter your email"
-                             value={'watchedValues.Email'}
+                             value={'watchedValues.email'}
                              errors={errors}
                              />
                   </div>
                   <div className='inps_Chung inps_password'>
                          <InpusCps
                              register={register}
-                             label="Password"
-                             type="Password"
+                             label="password"
+                             type="password"
                              placeholder="Enter your password "
-                             value={'watchedValues.Password'}
+                             value={'watchedValues.password'}
                              errors={errors}
                              />
                   </div>

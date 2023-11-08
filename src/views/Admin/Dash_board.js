@@ -19,9 +19,16 @@ import Report_img from "../../Components/Pictures/Left/Report.png";
 import Setting_img from "../../Components/Pictures/Left/Setting.png";
 import Students_img from "../../Components/Pictures/Left/Students.png";
 import Sign_out from "../../Components/Pictures/Left/Sign-out.png";
+import { useNavigate,Navigate } from 'react-router-dom';
 
-
-const Dash_board = () => {
+const Dash_board = ({setIsLogin,isLogin}) => {
+  const navigate = useNavigate();
+   
+  const handle_Logout = ()=>{
+      localStorage.removeItem("Login_Success");
+      setIsLogin(!isLogin)
+      navigate('/login');
+  }
   
   return (
     <div className="admin_form">
@@ -73,7 +80,7 @@ const Dash_board = () => {
             <div className="text_btn"> Payment</div>
           </div>
         </div>
-        <div className="user_loginOut">
+        <div className="user_loginOut" onClick={ ()=>{handle_Logout()}}>
           LogOut <img className="img_btn" src={Sign_out} />
         </div>
       </div>
