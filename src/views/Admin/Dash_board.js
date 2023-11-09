@@ -21,12 +21,15 @@ import Students_img from "../../Components/Pictures/Left/Students.png";
 import Sign_out from "../../Components/Pictures/Left/Sign-out.png";
 import { useNavigate,Navigate } from 'react-router-dom';
 
-const Dash_board = ({setIsLogin,isLogin}) => {
+import useAuth from "../../hooks/useAuth";
+
+const Dash_board = () => {
+
   const navigate = useNavigate();
-   
+  const {  auth,isLogin,setIsLogin  } = useAuth();
   const handle_Logout = ()=>{
       localStorage.removeItem("Login_Success");
-      setIsLogin(!isLogin)
+      setIsLogin(false);
       navigate('/login');
   }
   

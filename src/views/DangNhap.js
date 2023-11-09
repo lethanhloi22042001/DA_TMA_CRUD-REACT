@@ -10,7 +10,7 @@ import { useNavigate,Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 
-const DangNhap = ({setIsLogin,isLogin})=>{
+const DangNhap = ()=>{
     const [user, setUser] = useState(null);
     const [dataForm, setDataFrom] = useState({});
     const values = useSelector((state) => state.user.oneUser);
@@ -19,14 +19,10 @@ const DangNhap = ({setIsLogin,isLogin})=>{
 
 
     const navigate = useNavigate();
-    // const {setAuth} = useAuth();
-    const { auth, setAuth,userArr_Admin  } = useAuth();
+    const location = useLocation();
 
-    // console.log('setAuth Dang Nhap',setAuth);
-    // console.log('auth Dang Nhap',auth);
-    // console.log('userArr_Admin Dang Nhap',userArr_Admin);
-    // console.log('isLogin Dang Nhap',isLogin);
-     
+    const {  auth,isLogin,setIsLogin } = useAuth();
+ 
     const {
         handleSubmit,
         formState: { errors },
@@ -51,12 +47,15 @@ const DangNhap = ({setIsLogin,isLogin})=>{
         } else if (data.email === oneItem.email && data.password !== oneItem.password) {
           alert('Password is wrong');
         } else if (data.email === oneItem.email && data.password === oneItem.password) {
+           
           localStorage.setItem('Login_Success', true);
-          //
-          setAuth('Login_Success')
-          //
+          setIsLogin('Login_Success'); // xí check dòng này
+          // 1.Dựa vào localStorage => lúc đầu đăng nhập local chưa có 
+          // Đẩy callBack setIsLogin để setLogin_Success or True
+
+          
+
           reset();
-          setIsLogin(!isLogin);
           navigate('/admin/dash_board');
         } 
       }
