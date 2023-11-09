@@ -49,11 +49,8 @@ const DangNhap = ()=>{
         } else if (data.email === oneItem.email && data.password === oneItem.password) {
            
           localStorage.setItem('Login_Success', true);
-          setIsLogin('Login_Success'); // xí check dòng này
-          // 1.Dựa vào localStorage => lúc đầu đăng nhập local chưa có 
-          // Đẩy callBack setIsLogin để setLogin_Success or True
-
-          
+          // setIsLogin('Login_Success'); // xí check dòng này
+          setIsLogin(true); // xí check dòng này
 
           reset();
           navigate('/admin/dash_board');

@@ -20,13 +20,9 @@ import Setting_img from "../../Components/Pictures/Left/Setting.png";
 import Students_img from "../../Components/Pictures/Left/Students.png";
 import Sign_out from "../../Components/Pictures/Left/Sign-out.png";
 import { useNavigate,Navigate } from 'react-router-dom';
-
-import useAuth from "../../hooks/useAuth";
-
-const Dash_board = () => {
+const Dash_board = ({setIsLogin}) => {
 
   const navigate = useNavigate();
-  const {  auth,isLogin,setIsLogin  } = useAuth();
   const handle_Logout = ()=>{
       localStorage.removeItem("Login_Success");
       setIsLogin(false);

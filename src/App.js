@@ -21,12 +21,10 @@ import ReDucerReact from "./Todo/ReduxLib_ReDucerReact/ReDucerReact";
 import { useEffect, useState } from "react";
 import { AuthProvider } from './Context/AuthProvider';
 import RequireAuth from "./hooks/RequireAuth";
-
-import useAuth from "./hooks/useAuth";
 function App() {
 
-  const {  auth,isLogin,setIsLogin  } = useAuth();
-  //isLogin`
+  const [isLogin, setIsLogin] = useState(localStorage.getItem('Login_Success'));
+
   return (
     <div className="App" >
       <BrowserRouter>
@@ -34,11 +32,11 @@ function App() {
             <Routes>
 
                {/* Public this route */}
-              <Route path="/login" element={<DangNhap />} />
+              <Route path="/login" element={isLogin ? (<Navigate to="/admin/dash_board" /> ) : (<DangNhap isLogin={isLogin} setIsLogin={setIsLogin} /> )} />
                  
                 {/* Protect this route */}
               <Route element={<RequireAuth  />}>
-                <Route path="/admin/dash_board" element= {<Dash_board   />}></Route>
+                <Route path="/admin/dash_board" element= {<Dash_board isLogin={isLogin} setIsLogin={setIsLogin} />}></Route>
                     <Route path="/" element={<Home />}>
                     <Route path="/dog" element={<Dog />}></Route>
                     <Route path="/chicken" element={<Chicken />}></Route>

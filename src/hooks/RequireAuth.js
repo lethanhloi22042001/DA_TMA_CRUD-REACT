@@ -9,7 +9,7 @@ const RequireAuth = (  ) => {
     if ( isLogin === null ) {
         return <Navigate to="/login" state={{ from: location }}  replace/>;
         // return <Navigate to="/login"  />;
-    }else if(isLogin === true){
+    } else if(isLogin === true){
         return <Outlet />;
     }
         return <Outlet />;
