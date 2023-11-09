@@ -7,16 +7,25 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate,Navigate, useLocation } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 
+import useAuth from '../hooks/useAuth';
+
+
 const DangNhap = ({setIsLogin,isLogin})=>{
     const [user, setUser] = useState(null);
     const [dataForm, setDataFrom] = useState({});
     const values = useSelector((state) => state.user.oneUser);
-    const navigate = useNavigate();
-    
     const arrUserAdmin = useSelector((state) => state.admin.userArr_Admin);
     // console.log('Login arrUserAdmin',arrUserAdmin);
 
-    
+
+    const navigate = useNavigate();
+    // const {setAuth} = useAuth();
+    const { auth, setAuth,userArr_Admin  } = useAuth();
+
+    // console.log('setAuth Dang Nhap',setAuth);
+    // console.log('auth Dang Nhap',auth);
+    // console.log('userArr_Admin Dang Nhap',userArr_Admin);
+    // console.log('isLogin Dang Nhap',isLogin);
      
     const {
         handleSubmit,
@@ -43,6 +52,9 @@ const DangNhap = ({setIsLogin,isLogin})=>{
           alert('Password is wrong');
         } else if (data.email === oneItem.email && data.password === oneItem.password) {
           localStorage.setItem('Login_Success', true);
+          //
+          setAuth('Login_Success')
+          //
           reset();
           setIsLogin(!isLogin);
           navigate('/admin/dash_board');

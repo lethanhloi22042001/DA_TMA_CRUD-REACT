@@ -19,32 +19,36 @@ import CounterRedux_A from "./Todo/ReduxLib_ReDucerReact/CounterRedux_A";
 import CounterRedux_B from "./Todo/ReduxLib_ReDucerReact/CounterRedux_B";
 import ReDucerReact from "./Todo/ReduxLib_ReDucerReact/ReDucerReact";
 import { useEffect, useState } from "react";
-
+import { AuthProvider } from './Context/AuthProvider';
+import RequireAuth from "./hooks/RequireAuth";
 function App() {
-  // const isLogin = localStorage.getItem("Login_Success");
-  // console.log('isLogin',isLogin);
-  const [isLogin, setIsLogin] = useState(localStorage.getItem('Login_Success'));
-  console.log(isLogin);
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={isLogin ? (<Navigate to="/admin/dash_board" /> ) : (<DangNhap isLogin={isLogin} setIsLogin={setIsLogin} /> )} />
-          <Route path="/admin/dash_board" element={isLogin ? ( <Dash_board isLogin={isLogin} setIsLogin={setIsLogin} />) : (<Navigate to="/login" />)} />
 
-              {/* Protect this route */}
-          <Route path="/" element={<Home />}>
-            <Route path="/dog" element={<Dog />}></Route>
-            <Route path="/chicken" element={<Chicken />}></Route>
-            <Route path="/duck" element={<Duck />}></Route>
-            <Route path="/childToParent" element={<ParentComponent />}></Route>
-            <Route path="/useContext" element={<ComponentA />}></Route>
-            <Route path="/CounterRedux_A" element={<CounterRedux_A />}></Route>
-            <Route path="/CounterRedux_B" element={<CounterRedux_B />}></Route>
-            <Route path="/ReDucerReact" element={<ReDucerReact />}></Route>
-          </Route>
-          
-        </Routes>
+  const [isLogin, setIsLogin] = useState(localStorage.getItem('Login_Success'));
+  return (
+    <div className="App" >
+      <BrowserRouter>
+        <AuthProvider  >
+            <Routes>
+
+               {/* Public this route */}
+              <Route path="/login" element={isLogin ? (<Navigate to="/admin/dash_board" /> ) : (<DangNhap isLogin={isLogin} setIsLogin={setIsLogin} /> )} />
+                 
+                {/* Protect this route */}
+              <Route element={<RequireAuth  />}>
+                <Route path="/admin/dash_board" element= {<Dash_board isLogin={isLogin} setIsLogin={setIsLogin} />}></Route>
+                    <Route path="/" element={<Home />}>
+                    <Route path="/dog" element={<Dog />}></Route>
+                    <Route path="/chicken" element={<Chicken />}></Route>
+                    <Route path="/duck" element={<Duck />}></Route>
+                    <Route path="/childToParent" element={<ParentComponent />}></Route>
+                    <Route path="/useContext" element={<ComponentA />}></Route>
+                    <Route path="/CounterRedux_A" element={<CounterRedux_A />}></Route>
+                    <Route path="/CounterRedux_B" element={<CounterRedux_B />}></Route>
+                    <Route path="/ReDucerReact" element={<ReDucerReact />}></Route>
+                    </Route>
+              </Route>
+            </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
