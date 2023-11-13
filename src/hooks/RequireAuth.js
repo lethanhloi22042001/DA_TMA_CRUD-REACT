@@ -1,20 +1,20 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "./useAuth";
 import { render } from "react-dom";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const RequireAuth = (  ) => {
+const RequireAuth = () => {
+    const is_Login_Admin = useSelector((state) => state.admin.Login_Admin); 
+    console.log('is_Login_Admin Require',is_Login_Admin); 
     const location = useLocation();
-    const {  auth,isLogin,setIsLogin  } = useAuth();
-   
-    if ( isLogin === null ) {
+    
+    if ( is_Login_Admin === null ) {
         return <Navigate to="/login" state={{ from: location }}  replace/>;
-        // return <Navigate to="/login"  />;
-    }else if(isLogin === true){
+    }else if(is_Login_Admin === true){
         return <Outlet />;
     }
-        return <Outlet />;
+    return <Outlet />;
 
-    
 }
 
 export default RequireAuth;

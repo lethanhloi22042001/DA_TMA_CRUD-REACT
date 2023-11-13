@@ -18,6 +18,14 @@ import actionTypes from "./actionTypes";
   });
 
   //updateUserAdmin
+
+  // Login-Logout Item
+
+export const userAdmin_IsLogin = (data) => ({
+
+  type: actionTypes.LOGIN_USER_ADMIN_SUCCESS,
+  data : data,
+});
   
   
 

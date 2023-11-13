@@ -1,27 +1,32 @@
 import './DangNhap.scss'
 import InpusCps from '../Components/Input_cps'
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useNavigate,Navigate, useLocation } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 
-import useAuth from '../hooks/useAuth';
+import {
+  //ADMIN
+  createNewUserAdmin,
+  deleteUserRedux_Admin,
+  updateUserAdmin,
+  userAdmin_IsLogin
+} from "../Redux/actions";
 
 
-const DangNhap = ()=>{
+const DangNhap = ( )=>{
     const [user, setUser] = useState(null);
     const [dataForm, setDataFrom] = useState({});
     const values = useSelector((state) => state.user.oneUser);
     const arrUserAdmin = useSelector((state) => state.admin.userArr_Admin);
-    // console.log('Login arrUserAdmin',arrUserAdmin);
 
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-
-    const {  auth,isLogin,setIsLogin } = useAuth();
+    
  
     const {
         handleSubmit,
@@ -44,17 +49,13 @@ const DangNhap = ()=>{
         const oneItem = arrUserAdmin.find(item => item.email === data.email);
         if (!oneItem ) {
           alert('Email is wrong');
+          // setValue("email", "");
         } else if (data.email === oneItem.email && data.password !== oneItem.password) {
           alert('Password is wrong');
         } else if (data.email === oneItem.email && data.password === oneItem.password) {
            
           localStorage.setItem('Login_Success', true);
-          setIsLogin('Login_Success'); // xí check dòng này
-          // 1.Dựa vào localStorage => lúc đầu đăng nhập local chưa có 
-          // Đẩy callBack setIsLogin để setLogin_Success or True
-
-          
-
+          dispatch(userAdmin_IsLogin(true));
           reset();
           navigate('/admin/dash_board');
         } 
@@ -90,7 +91,8 @@ const DangNhap = ()=>{
                              label="email"
                              type="email"
                              placeholder="Enter your email"
-                             value={'watchedValues.email'}
+                            //  value={'watchedValues.email'}
+                              value={watch("email")}
                              errors={errors}
                              />
                   </div>

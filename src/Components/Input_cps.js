@@ -26,15 +26,17 @@ const InpusCps = ({ label, type, placeholder, errors, register, value,defaultVal
         {...register(label, {
           required: `Vui lòng nhập vào ${label}`,
           maxLength: {
-            value: label === "password" || label === "email" ? 25 : null,
+            value: label === "password" || label === "email" ? 30 : null,
             message:
               label === "password" || label === "email"
                 ? `${label} không được dài quá 25 ký tự`
                 : null,
           },
+            // validate: value => value === 'lethanha@gmail.com' || 'Everything look good'  
         })}
       />
       <span style={{color : 'red'}}>
+        {/* {errors[label] && errors[label].validate} */}
         {errors[label] && errors[label].message}
         {errors[label] && errors[label].message && isEverythingGood && "Everything looks good"}
       </span>

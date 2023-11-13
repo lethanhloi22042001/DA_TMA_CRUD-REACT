@@ -21,15 +21,23 @@ import Students_img from "../../Components/Pictures/Left/Students.png";
 import Sign_out from "../../Components/Pictures/Left/Sign-out.png";
 import { useNavigate,Navigate } from 'react-router-dom';
 
-import useAuth from "../../hooks/useAuth";
+import { userAdmin_IsLogin } from "../../Redux/actions";
 
 const Dash_board = () => {
 
   const navigate = useNavigate();
-  const {  auth,isLogin,setIsLogin  } = useAuth();
+  const dispatch = useDispatch();
+
+   
+  
   const handle_Logout = ()=>{
+    
+      // dispatch(userAdmin_IsLogin(false));
+
+      // console.log('is_Login_Admin DASH_BOARD',is_Login_Admin);
+      // setIs_Login_Admin(false);
+      dispatch(userAdmin_IsLogin(true));
       localStorage.removeItem("Login_Success");
-      setIsLogin(false);
       navigate('/login');
   }
   
