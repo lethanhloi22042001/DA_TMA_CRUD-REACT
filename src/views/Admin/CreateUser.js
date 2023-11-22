@@ -27,9 +27,12 @@ import {
 } from "../../Redux/actions";
 const Create_User = () => {
   const dispatch = useDispatch();
-  const genderArr = useSelector((state) => state.user.arrGender); // Mảng Selector Giới Tính
+  const genderArr = useSelector((state) =>
+    state.user?.arrGender ? state.user.arrGender : []
+  ); // Mảng Selector Giới Tính
   const roleArr = useSelector((state) => state.user.arrRole); // Mảng Selector Chức Danh
-   
+  console.log("genderArr", genderArr);
+
   const [selectedGender, setSelectedGender] = useState({});
   const [selectedRole, setSelectedRole] = useState({});
   const [previewImgURL, setPreviewImgURL] = useState(""); // Lấy ảnh hiển thị ở máy người dùng
@@ -46,15 +49,25 @@ const Create_User = () => {
   const [isReLoad, setIsReLoad] = useState(false); // Reload lai trang
 
   const {
-    handleSubmit,formState: { errors }, register, setValue, reset, } = useForm({
+    handleSubmit,
+    formState: { errors },
+    register,
+    setValue,
+    reset,
+  } = useForm({
     defaultValues: {
-      email: "", password: "",address: "",firstName: "",lastName: "",phonenumber: "",gender: "",
+      email: "",
+      password: "",
+      address: "",
+      firstName: "",
+      lastName: "",
+      phonenumber: "",
+      gender: "",
       image: "",
       positionId: "",
     },
     resetOptions: {},
   });
-  
 
   useEffect(() => {
     if (arrUserAdmin?.length === 0) {
@@ -66,10 +79,11 @@ const Create_User = () => {
     if (genderArr?.length === 0) {
       dispatch(getGender("GENDER"));
     }
-    if (roleArr?.length === 0) {
-      dispatch(getRole("ROLE"));
-    }
-  }, []);
+    //   }
+    // //   if (roleArr?.length === 0) {
+    // //     dispatch(getRole("ROLE"));
+    // //   }
+  }, [genderArr]);
 
   useEffect(() => {
     if (isReLoad) {
@@ -93,11 +107,24 @@ const Create_User = () => {
       dispatch(createUserRedux(data));
       dispatch(getAllUserRedux());
       alert("Create Success");
-    }
-      else{
+    } else {
       dispatch(updateUserRedux(data));
       alert("Update Success");
     }
+  };
+
+  const handle_Select = (inputData) => {
+    let result = [];
+    if (inputData && inputData.length > 0) {
+      inputData.map((item, index) => {
+        result.push({
+          id: item.id,
+          value: item.keyMap,
+          label: item.valueVi,
+        });
+      });
+    }
+    return result;
   };
 
   return (
@@ -160,10 +187,7 @@ const Create_User = () => {
             return (
               <div className="head-list" key={index}>
                 <div className="item_data t1">
-                  <img
-                    className=""
-                    src={imageBase64}
-                  />
+                  <img className="" src={imageBase64} />
                 </div>
                 <div className="item_data t2">{item.firstName}</div>
                 <div className="item_data t3">{item.email}</div>

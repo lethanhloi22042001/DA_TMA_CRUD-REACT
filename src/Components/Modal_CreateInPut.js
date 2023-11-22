@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Pictur_Base64 from "../utils/Pictur_Base64";
 import { Buffer } from "buffer";
+
 const Modal_CreateInPut = ({
   onSubmit,
   isOpenModal,
@@ -23,13 +24,13 @@ const Modal_CreateInPut = ({
   setImage, //BLOB - String
   image, //BLOB - String
 
-  genderArr , // mảng Selected gender
-  roleArr , //mảng Selected roleId
+  genderArr, // mảng Selected gender
+  roleArr, //mảng Selected roleId
 
-  selectedGender , // 1 Object when select - Gender
-  setSelectedGender ,// 1 Object when Set-select
-  selectedRole , // 1 Object when select - Role
-  setSelectedRole , // 1 Object when Ser-select
+  selectedGender, // 1 Object when select - Gender
+  setSelectedGender, // 1 Object when Set-select
+  selectedRole, // 1 Object when select - Role
+  setSelectedRole, // 1 Object when Ser-select
 }) => {
   const {
     handleSubmit,
@@ -44,46 +45,46 @@ const Modal_CreateInPut = ({
       address: "",
       firstName: "",
       lastName: "",
-      
     },
     resetOptions: {},
   });
-   
 
+  const dispatch = useDispatch();
   const handleCancle = () => {
     setIsOpenModal(false);
     setUserEdit(null);
-    
+
     //Reset
-    setImage('');
-    setPreviewImgURL('');
+    setImage("");
+    setPreviewImgURL("");
     setSelectedRole({});
     setSelectedGender({});
     reset();
   };
-  const handle_Select = (inputData) => { 
+  const handle_Select = (inputData) => {
     let result = [];
     if (inputData && inputData.length > 0) {
-        inputData.map((item, index) => { 
-          let Object = {};
-          Object.label = item.valueVi ;
-          Object.value = item.keyMap; 
-          result.push(Object);
-        });
+      inputData.map((item, index) => {
+        let Object = {};
+        Object.label = item.valueVi;
+        Object.value = item.keyMap;
+        result.push(Object);
+      });
     }
     return result;
   };
-const handle_BE = (inputData) => {
+  const handle_BE = (inputData) => {
     let result = [];
-          let Object = {};
-          Object.label = inputData.valueVi ;
-          Object.value = inputData.keyMap; 
-          result.push(Object);
-          
+    let Object = {};
+    Object.label = inputData.valueVi;
+    Object.value = inputData.keyMap;
+    result.push(Object);
+
     return result[0];
   };
 
- 
+  console.log(genderArr, "model");
+
   useEffect(() => {
     if (userEdit) {
       let getValueEdit_gender = {};
@@ -93,21 +94,19 @@ const handle_BE = (inputData) => {
       if (userEdit.image) {
         imageBase64 = new Buffer(userEdit.image, "base64").toString("binary");
       }
-     // Lấy từ mảng Select -> so sánh gtri khi lấy BE lên 
-      genderArr.map( (item)=>{
-        if(item.keyMap === userEdit.gender){
-          return getValueEdit_gender = item ;
+      // Lấy từ mảng Select -> so sánh gtri khi lấy BE lên
+      genderArr.map((item) => {
+        if (item.keyMap === userEdit.gender) {
+          return (getValueEdit_gender = item);
         }
-        return  getValueEdit_gender  ;
-      } 
-      );
-      roleArr.map( (item)=>{
-        if(item.keyMap === userEdit.roleId){
-          return getValueEdit_role = item ;
+        return getValueEdit_gender;
+      });
+      roleArr.map((item) => {
+        if (item.keyMap === userEdit.roleId) {
+          return (getValueEdit_role = item);
         }
-        return  getValueEdit_role  ;
-      } 
-      );
+        return getValueEdit_role;
+      });
       setValue("id", userEdit.id);
       setValue("email", userEdit.email);
       setValue("image", imageBase64);
@@ -121,9 +120,8 @@ const handle_BE = (inputData) => {
       setPreviewImgURL(imageBase64);
       setSelectedRole(handle_BE(getValueEdit_role));
       setSelectedGender(handle_BE(getValueEdit_gender));
-
     }
-  },[userEdit]); // bắn trên xuống -> be Changed , thì nạp lại
+  }, [userEdit]); // bắn trên xuống -> be Changed , thì nạp lại
   const handleOnchangeIMG = async (event) => {
     let data = event.target.files;
     let file = data[0];
@@ -134,30 +132,34 @@ const handle_BE = (inputData) => {
       setImage(base64); //Chuyển dữ liệu ảnh(tập tin) sang dạng base64 mới đẩy xuống BE được (và dưới BE đang kiểu BLOB nên kiểu avatar tiếp tục bị đổi thành dạng BUFFER)
     }
   };
-  
-  const handleChangeSelect_Gender = (selectedGender )=>{
+
+  const handleChangeSelect_Gender = (selectedGender) => {
     setSelectedGender(selectedGender);
-  }
-  const handleChangeSelect_Role = (selectedRole )=>{
+  };
+  const handleChangeSelect_Role = (selectedRole) => {
     setSelectedRole(selectedRole);
-  }
-  
+  };
+
   const genderArrList = handle_Select(genderArr);
-  const roleArrList = handle_Select(roleArr) ;
-
-
+  const roleArrList = handle_Select(roleArr);
 
   const handleOnSubmit = handleSubmit((data) => {
-    let allData = {...data,image : image, gender : selectedGender.value, roleId:selectedRole.value}
+    let allData = {
+      ...data,
+      image: image,
+      gender: selectedGender.value,
+      roleId: selectedRole.value,
+    };
     onSubmit(allData, userEdit, reset);
     setIsReLoad(true); // Load Lại trang
     setIsOpenModal(false);
-     
-        setImage('');
-        setPreviewImgURL('');
-        setSelectedRole({});
-        setSelectedGender({});
+
+    setImage("");
+    setPreviewImgURL("");
+    setSelectedRole({});
+    setSelectedGender({});
     reset();
+
     console.log("data SubMit", allData);
   });
 
@@ -239,10 +241,11 @@ const handle_BE = (inputData) => {
                   type="roleId"
                   placeholder="Pls choose a position :V "
                   options={roleArrList}
-                  onChange={ (selectedRole)=>{handleChangeSelect_Role(selectedRole)} }
+                  onChange={(selectedRole) => {
+                    handleChangeSelect_Role(selectedRole);
+                  }}
                   value={selectedRole}
-                  />
-                  {console.log('selectedRole',selectedRole)}
+                />
               </div>
 
               <div className="col-md-6">
@@ -251,9 +254,8 @@ const handle_BE = (inputData) => {
                   label="gender"
                   type="gender"
                   placeholder="Pls choose a Gender :V "
-                  options={genderArrList}
-                  onChange={ (selectedGender)=>{handleChangeSelect_Gender(selectedGender)}}
-                  value={selectedGender}
+                  options={genderArr}
+                  defaultValue={genderArr[0]}
                 />
               </div>
             </div>
