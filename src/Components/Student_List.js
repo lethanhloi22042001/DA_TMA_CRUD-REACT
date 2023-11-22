@@ -7,11 +7,6 @@ import Modal_CreateInPut from "./Modal_CreateInPut";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  getAllUserRedux,
-  deleteUserRedux,
-  createUserRedux,
-  updateUserRedux,
-  getOneUser,
   //ADMIN
   createNewUserAdmin,
   deleteUserRedux_Admin,
@@ -36,7 +31,6 @@ const Student_List = () => {
   
 
   const handleOnclick_Delete = (item)=>{
-    console.log('item Delete',item);
     dispatch(deleteUserRedux_Admin(item));
     setIsReLoad(true); // reaload lai trang
   }
@@ -48,7 +42,6 @@ const Student_List = () => {
   }
 
   const onSubmit = (data,itemEdit,reset)=>{
-    console.log('itemEdit co hay khong',itemEdit);
     if(itemEdit === null){
       dispatch(createNewUserAdmin(data));
       alert("Create Success");
@@ -99,9 +92,9 @@ const Student_List = () => {
           <div className="name_thead t1"></div>
           <div className="name_thead t2">Name</div>
           <div className="name_thead t3">Email</div>
-          <div className="name_thead t4">Phone</div>
-          <div className="name_thead t5">Eroll Number</div>
-          <div className="name_thead t6">Date of Admission</div>
+          <div className="name_thead t4">Last Name</div>
+          <div className="name_thead t5">Pass Word</div>
+          <div className="name_thead t6">Address</div>
           <div className="name_thead t7"></div>
           <div className="name_thead t7"></div>
         </div>
@@ -118,9 +111,9 @@ const Student_List = () => {
                   </div>
                   <div className="item_data t2">{item.firstName}</div>
                   <div className="item_data t3">{item.email}</div>
-                  <div className="item_data t4">{item.phoneNumber}</div>
-                  <div className="item_data t5">{item.ErollNumber}</div>
-                  <div className="item_data t6">{item.days}</div>
+                  <div className="item_data t4">{item.lastName}</div>
+                  <div className="item_data t5">{item.password}</div>
+                  <div className="item_data t6">{item.address}</div>
                   <div className="item_data t7" onClick={()=>{handleOnclick_Edit(item)}}>
                     <FontAwesomeIcon icon={faPen} />
                   </div>

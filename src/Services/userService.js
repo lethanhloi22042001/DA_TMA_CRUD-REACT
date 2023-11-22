@@ -1,10 +1,15 @@
 import instance from "../axios/axios";
 
+const get_AllCode = (role) => {
+  return instance.get(`/api/getallcode?type=${role}`);
+};
+
 const getAllUser = (inputId) => {
   return instance.get(`/api/get-all-users?id=${inputId}`,inputId);
 };
 
 const createNewUserService = (data) => {
+  console.log('data API POST',data);
   return instance.post("/api/create-new-user", data);
 };
 
@@ -16,7 +21,7 @@ const updateUser = (userId) => {
 };
 
 const userService = {
-  getAllUser,createNewUserService,deleteNewUserService ,updateUser
+  getAllUser,createNewUserService,deleteNewUserService ,updateUser,get_AllCode
 }
 
 export default userService ;

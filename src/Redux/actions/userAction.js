@@ -6,6 +6,39 @@ export const getOneUser = (data) => ({
   type: actionTypes.GET_ONE_USER_SUCCESS,
   data: data,
 });
+//========= Get All CODE===============
+ 
+export const getGender = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await userService.get_AllCode(data);
+      dispatch(getGENDERSucess(res.data)); 
+    } catch (errCode) {
+      console.log("getAllUserFail", errCode);
+    }
+  };
+};
+export const getGENDERSucess = (data) => ({
+  data: data,
+  type: actionTypes.GET_GENDER_SUCCESS,
+});
+
+
+export const getRole = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await userService.get_AllCode(data);
+      let convert = res.data;
+      dispatch(getRoleSucess(convert)); 
+    } catch (errCode) {
+      console.log("getRole Fail", errCode);
+    }
+  };
+};
+export const getRoleSucess = (data) => ({
+  data: data,
+  type: actionTypes.GET_ROLE_SUCCESS,
+});
 
 //========= Get All User===============
 export const getAllUserSucess = (data) => ({
@@ -18,33 +51,29 @@ export const getAllUserRedux = () => {
       let res = await userService.getAllUser("ALL");
       if (res && res.errCode === 0) {
         dispatch(getAllUserSucess(res.users.reverse()));
+        dispatch(getGender("GENDER"));
+        dispatch(getRole('ROLE'));
       }
     } catch (errCode) {
-      dispatch(getAllUserFail());
       console.log("getAllUserFail", errCode);
     }
   };
 };
-export const getAllUserFail = () => ({
-  type: actionTypes.GET_ALLUSER_FAIL,
-});
+ 
 
 //========= CREATE USER===============
 
 export const createUserRedux = (data) => {
   return async (dispatch, getState) => {
     try {
+      console.log('data',data);
       let res = await userService.createNewUserService(data);
-      console.log("createUserRedux res", res);
       if (res && res.errCode === 0) {
         dispatch(createUserSuccess());
         dispatch(getAllUserRedux());
-      } else {
-        dispatch(createUserFail());
-      }
+      }  
     } catch (error) {
-      dispatch(createUserFail());
-      console.log("createUserFail");
+      console.log("createUserFail",error);
     }
   };
 };
@@ -53,52 +82,39 @@ export const createUserSuccess = () => ({
   type: actionTypes.CREATE_USER_SUCCESS,
 });
 
-export const createUserFail = () => ({
-  type: actionTypes.CREATE_USER_FAIL,
-});
-
 // ========= DELETE===============
 export const deleteUserRedux = (userId) => {
   return async (dispatch, getState) => {
     try {
       let res = await userService.deleteNewUserService(userId);
+      console.log('trsRES',res);
       if (res && res.errCode === 0) {
         dispatch(deleteUserSuccess());
         dispatch(getAllUserRedux());
-      } else {
-        dispatch(deleteUserFail());
-      }
+      }  
     } catch (error) {
-      dispatch(deleteUserFail());
-      console.log("deleteUserFail");
+     
+      console.log("deleteUserFail",error);
     }
   };
 };
 export const deleteUserSuccess = () => ({
   type: actionTypes.DELETE_USER_SUCCESS,
 });
-
-export const deleteUserFail = () => ({
-  type: actionTypes.DELETE_USER_FAIL,
-});
+ 
 
 // ========= UpDATE===============
 export const updateUserRedux = (data) => {
   return async (dispatch, getState) => {
     try {
-      console.log('data Redux0',data);
+
       let res = await userService.updateUser(data);
-      console.log('data Redux1',res);
       if (res && res.errCode === 0) {
-        console.log('data Redux2',res);
         dispatch(updateUserSuccess(res));
         dispatch(getAllUserRedux());
-      } else {
-        dispatch(updateUserFail());
       }
     } catch (error) {
-      dispatch(updateUserFail());
-      console.log("updateUserFail");
+      console.log("error Update",error);
     }
   };
 };
@@ -106,7 +122,4 @@ export const updateUserSuccess = (data) => ({
   type: actionTypes.UPDATE_USER_SUCCESS,
   data : data,
 });
-
-export const updateUserFail = () => ({
-  type: actionTypes.UPDATE_USER_FAIL,
-});
+ 

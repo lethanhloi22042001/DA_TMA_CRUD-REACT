@@ -19,42 +19,53 @@ import CounterRedux_A from "./Todo/ReduxLib_ReDucerReact/CounterRedux_A";
 import CounterRedux_B from "./Todo/ReduxLib_ReDucerReact/CounterRedux_B";
 import ReDucerReact from "./Todo/ReduxLib_ReDucerReact/ReDucerReact";
 import { useEffect, useState } from "react";
-import { AuthProvider } from './Context/AuthProvider';
+import { AuthProvider } from "./Context/AuthProvider";
 import RequireAuth from "./hooks/RequireAuth";
-import { userAdmin_IsLogin } from "./Redux/actions";
+import Student_List from "./Components/Student_List";
+import Home_dashBoard from "./Components/Home_dashBoard";
+import Payment_dashBoard from "./Components/Payment_dashBoard";
+import Create_User from "./views/Admin/CreateUser";
 import { useSelector } from "react-redux";
-//khi lưu dữ liệu trên kho reducer của redux, f5 là mất dữ liệu 
-// dùng redux persistor để lưu dữ li
-function App() {
-  
-  const [is_Login_Admin,setIs_Login_Admin] = useState(localStorage.getItem('Login_Success'));  
-  const is_Login_AdminRedux = useSelector((state) => state.admin.Login_Admin); 
-  console.log(' App',is_Login_Admin); 
-  console.log(' Redux',is_Login_AdminRedux); 
-  return (
-    <div className="App" >
-      <BrowserRouter>
-        <AuthProvider  >
-            <Routes>
 
-               {/* Public this route */}
-              <Route path="/login" element={is_Login_Admin ? (<Navigate to="/admin/dash_board" /> ) : (<DangNhap  /> )} />
-                 
-                {/* Protect this route */}
-                {/*( is_Login_Admin === null) return <Navigate to="/login" else return <OutLet> */}
-              <Route element={<RequireAuth  />}> 
-                  <Route path="/admin/dash_board" element= {<Dash_board  />}></Route>
-                  <Route path="/" element={<Home />}></Route>
-                  <Route path="/dog" element={<Dog />}></Route>
-                  <Route path="/chicken" element={<Chicken />}></Route>
-                  <Route path="/duck" element={<Duck />}></Route>
-                  <Route path="/childToParent" element={<ParentComponent />}></Route>
-                  <Route path="/useContext" element={<ComponentA />}></Route>
-                  <Route path="/CounterRedux_A" element={<CounterRedux_A />}></Route>
-                  <Route path="/CounterRedux_B" element={<CounterRedux_B />}></Route>
-                  <Route path="/ReDucerReact" element={<ReDucerReact />}></Route>
+function App() {
+  const is_Login_Admin = useSelector((state) => state.admin.Login_Admin);
+
+  useEffect(() => {
+
+    if (is_Login_Admin === false) {
+
+    }
+  }, []); 
+  
+
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            {/* Public this route */}
+            <Route path="/login" element={ is_Login_Admin ? ( <Navigate to="/admin/dash_board" /> ) : (<DangNhap /> ) } />
+
+            {/* Protect this route */}
+            <Route element={<RequireAuth />}>
+              <Route path="/" element={<Home />}>
+                <Route path="/CounterRedux_A" element={<CounterRedux_A />} ></Route>
+                <Route path="/CounterRedux_B" element={<CounterRedux_B />}></Route>
               </Route>
-            </Routes>
+
+              <Route path="/admin/dash_board" element={<Dash_board />}>
+                <Route path="student_list" element={<Student_List />}></Route>
+                <Route path="createUser" element={<Create_User />}></Route>
+                <Route path="payment" element={<Payment_dashBoard />}></Route>
+                <Route path="home" element={<Home_dashBoard />}></Route> 
+              </Route>
+
+              <Route path="/childToParent" element={<ParentComponent />} ></Route>
+              <Route path="/useContext" element={<ComponentA />}></Route>
+              
+              <Route path="/ReDucerReact" element={<ReDucerReact />}></Route>
+            </Route>
+          </Routes>
         </AuthProvider>
       </BrowserRouter>
     </div>

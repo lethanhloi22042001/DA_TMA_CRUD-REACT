@@ -49,7 +49,7 @@ export const initialState = {
     },
   ],
   user_Admin: {},
-  Login_Admin: null,
+  Login_Admin:  localStorage.getItem('Login_Success'),
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -82,9 +82,12 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...copyState_delete,
       };
+     // UPDATE
     case actionTypes.UPDATE_USER_ADMIN_SUCCESS:
+
       const index = state.userArr_Admin.findIndex(
-        (item) => item.id === action.data.id
+        (item) =>( item.id === action.data.id )
+
       );
       console.log("index update", index);
       if (index !== -1) {
@@ -93,6 +96,14 @@ const adminReducer = (state = initialState, action) => {
           ...action.data,
         };
         state.userArr_Admin.splice(index, 1, newObjectState);
+        // email: "quangHuy@gmail.com",
+        // password: "123",
+        // address: "Quang Nam",
+        // firstName: "Lê",
+        // lastName: "Lợi",
+        // phoneNumber: "08766291022",
+        // ErollNumber: "9010923912838102",
+        // days: "22/04/2001",
       }
       state.userArr_Admin[index] = {
         ...state.userArr_Admin[index],

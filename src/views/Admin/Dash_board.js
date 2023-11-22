@@ -1,4 +1,5 @@
 import "./Dash_board.scss";
+import { Outlet } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -20,26 +21,38 @@ import Setting_img from "../../Components/Pictures/Left/Setting.png";
 import Students_img from "../../Components/Pictures/Left/Students.png";
 import Sign_out from "../../Components/Pictures/Left/Sign-out.png";
 import { useNavigate,Navigate } from 'react-router-dom';
-
 import { userAdmin_IsLogin } from "../../Redux/actions";
 
 const Dash_board = () => {
-
+  const is_Login_AdminRedux = useSelector((state) => state.admin.Login_Admin); 
+   
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-   
   
   const handle_Logout = ()=>{
-    
-      // dispatch(userAdmin_IsLogin(false));
-
-      // console.log('is_Login_Admin DASH_BOARD',is_Login_Admin);
-      // setIs_Login_Admin(false);
-      dispatch(userAdmin_IsLogin(true));
+      dispatch(userAdmin_IsLogin(false));
       localStorage.removeItem("Login_Success");
       navigate('/login');
   }
+  const handleOnclick = ()=>{
+    navigate('chicken');
+    // return <Navigate to="/chicken"></Navigate>
+  }
+  
+  const handleOnclick2 = ()=>{
+    navigate('student_list');
+  }
+  const handleOnclick4 = ()=>{
+    navigate('payment');
+  }
+  const handleOnclickHome = ()=>{
+    navigate('home');
+  }
+  const handleOnclickCreateUser = ()=>{
+    navigate('createUser');
+  }
+
   
   return (
     <div className="admin_form">
@@ -51,27 +64,33 @@ const Dash_board = () => {
           <div className="user_position">Admin</div>
         </div>
         <div className="user_btn">
-          <div className="user_btn_chung user_btn_flex">
+          <div className="user_btn_chung user_btn_flex" onClick={()=>{handleOnclickHome()}}>
             <div className="home_fix">
               <img className="img_btn" src={Home_img} />
             </div>
             <div className="text_btn"> Home</div>
           </div>
-
-          <div className="user_btn_chung user_btn_flex">
+          <div className="user_btn_chung user_btn_flex" onClick={()=>{handleOnclickCreateUser()}}>
             <div className="home_fix">
-              <img className="img_btn" src={Course_img} />
+              <img className="img_btn" src={Setting_img} />
             </div>
-            <div className="text_btn"> Home</div>
+            <div className="text_btn"> Create_User</div>
           </div>
 
-          <div className="user_btn_chung user_btn_flex">
+          <div className="user_btn_chung user_btn_flex" onClick={()=>{handleOnclick()}}>
+            <div className="home_fix" >
+              <img className="img_btn" src={Course_img} />
+            </div>
+            <div className="text_btn"> Teacher</div>
+          </div>
+
+          <div className="user_btn_chung user_btn_flex" onClick={()=>{handleOnclick2()}}>
             <div className="home_fix">
               <img className="img_btn" src={Students_img} />
             </div>
             <div className="text_btn"> Students</div>
           </div>
-          <div className="user_btn_chung user_btn_flex">
+          <div className="user_btn_chung user_btn_flex"  onClick={()=>{handleOnclick4()}}>
             <div className="home_fix">
               <img className="img_btn" src={Payment_img} />
             </div>
@@ -82,14 +101,9 @@ const Dash_board = () => {
             <div className="home_fix">
               <img className="img_btn" src={Report_img} />
             </div>
-            <div className="text_btn"> Students</div>
+            <div className="text_btn"> Reports</div>
           </div>
-          <div className="user_btn_chung user_btn_flex">
-            <div className="home_fix">
-              <img className="img_btn" src={Setting_img} />
-            </div>
-            <div className="text_btn"> Payment</div>
-          </div>
+         
         </div>
         <div className="user_loginOut" onClick={ ()=>{handle_Logout()}}>
           LogOut <img className="img_btn" src={Sign_out} />
@@ -120,9 +134,7 @@ const Dash_board = () => {
         </div>
         {/* Body->Right */}
         <div className="bot_contain">
-          <Student_List
-               
-          />
+          <Outlet/>
         </div>
       </div>
     </div>

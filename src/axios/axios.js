@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:2020",
 });
 
 //interceptor để xử lý lỗi từ phản hồi của API (dùng then catch)

@@ -1,12 +1,10 @@
-import './DangNhap.scss'
+import './SignIn.scss'
 import InpusCps from '../Components/Input_cps'
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useNavigate,Navigate, useLocation } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
-
 import {
   //ADMIN
   createNewUserAdmin,
@@ -16,7 +14,7 @@ import {
 } from "../Redux/actions";
 
 
-const DangNhap = ( )=>{
+const SignIn = ( )=>{
     const [user, setUser] = useState(null);
     const [dataForm, setDataFrom] = useState({});
     const values = useSelector((state) => state.user.oneUser);
@@ -78,13 +76,12 @@ const DangNhap = ( )=>{
                 <div className='logo'>
                     <h1>CRUD OPERATIONS</h1>
                     <div className="logo_text">
-                        <div className="logo_text1">SIGN IN</div>
+                        <div className="logo_text1">Login In</div>
                         <div className="logo_text2">Enter yours credentials to access your account</div>
                     </div>
                 </div>
                 <div className='inps'>
                   <div className='inps_Chung inps_Email'>
-                     
                          <InpusCps
                              register={register}
                              label="email"
@@ -117,4 +114,4 @@ const DangNhap = ( )=>{
     )
 }
 
-export default DangNhap 
+export default SignIn 
